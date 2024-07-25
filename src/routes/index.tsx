@@ -1,10 +1,14 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import Homepage from "../pages";
-import LoginPage from "../pages/auth/login";
-import EditProfilePage from "../pages/users/edit-profile";
-import ProfilePage from "../pages/users/profile";
-import ReportsPage from "../pages/admin/reports";
+
+
+import Homepage from "@/pages";
+import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
+import EditProfilePage from "@/pages/users/edit-profile";
+import ProfilePage from "@/pages/users/profile";
+import AdminDashboardPage from "@/pages/admin/dashboard";
+import ReportsPage from "@/pages/admin/reports";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -18,6 +22,10 @@ export default function Router() {
       element: <LoginPage />,
     },
     {
+      path: "/register",
+      element: <RegisterPage />,
+    },
+    {
       path: "/profile",
       element: <ProfilePage />,
     },
@@ -28,6 +36,10 @@ export default function Router() {
     {
       path: "/admin/reports",
       element: <ReportsPage />,
+    },
+    {
+      path: "/admin/dashboard",
+      element: <AdminDashboardPage />,
     },
   ]);
 
