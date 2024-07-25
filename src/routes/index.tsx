@@ -11,6 +11,7 @@ import ReportsPage from "@/pages/admin/reports";
 import EditUserPage from "@/pages/admin/edit-user";
 import ManageRewardsPage from "@/pages/admin/manage-rewards";
 import VerifyWasteDepositPage from "@/pages/admin/verify-waste-deposit";
+import WasteLocationPage from "@/pages/waste/location";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ export default function Router() {
     {
       path: "/admin/verify-waste-deposit",
       element: <VerifyWasteDepositPage />,
+    },
+    {
+      path: "/locations",
+      element: <WasteLocationPage />,
     },
   ]);
 
