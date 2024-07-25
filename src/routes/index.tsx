@@ -8,6 +8,7 @@ import RegisterPage from "@/pages/auth/register";
 import EditProfilePage from "@/pages/users/edit-profile";
 import ProfilePage from "@/pages/users/profile";
 import AdminDashboardPage from "@/pages/admin/dashboard";
+import ManageUserPage from "@/pages/admin/manage-user";
 import ReportsPage from "@/pages/admin/reports";
 
 export default function Router() {
@@ -40,6 +41,10 @@ export default function Router() {
     {
       path: "/admin/dashboard",
       element: <AdminDashboardPage />,
+    },
+    {
+      path: "/admin/manage-user",
+      element: <ManageUserPage />,
     },
   ]);
 
