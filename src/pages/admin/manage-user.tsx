@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
+import { Link } from "react-router-dom";
 
 export default function ManageUser() {
   const user = [
@@ -91,7 +92,7 @@ export default function ManageUser() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
                           <FilePenIcon className="h-4 w-4 mr-2" />
-                          <a href="/admin/edit-user">Edit</a>
+                          <Link to="/admin/edit-user">Edit</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <TrashIcon className="h-4 w-4 mr-2" />
