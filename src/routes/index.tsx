@@ -11,6 +11,7 @@ import ReportsPage from "@/pages/admin/reports";
 import EditUserPage from "@/pages/admin/edit-user";
 import ManageRewardsPage from "@/pages/admin/manage-rewards";
 import VerifyWasteDepositPage from "@/pages/admin/verify-waste-deposit";
+import EditRewardPage from "@/pages/admin/edit-reward";
 import WasteLocationPage from "@/pages/waste/location";
 import WasteDepositPage from "@/pages/waste/deposit";
 
@@ -60,6 +61,10 @@ export default function Router() {
     {
       path: "/admin/verify-waste-deposit",
       element: <VerifyWasteDepositPage />,
+    },
+    {
+      path: "/admin/edit-reward",
+      element: <EditRewardPage />,
     },
     {
       path: "/locations",
