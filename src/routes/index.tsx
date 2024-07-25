@@ -18,6 +18,7 @@ import WasteHistoryPage from "@/pages/waste/history";
 import AddRewardPage from "@/pages/admin/add-reward";
 import RedeemPointsPage from "@/pages/points/redeem";
 import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
+import DetailReedemPoinPage from "@/pages/points/detail-redeem";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -89,6 +90,10 @@ export default function Router() {
     {
       path: "/points/redeem",
       element: <RedeemPointsPage />,
+    },
+    {
+      path: "/points/detail-redeem",
+      element: <DetailReedemPoinPage />,
     },
     {
       path: "/admin/detail-waste-deposit",

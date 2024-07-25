@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
 
-export default function ReedemPoin() {
+export default function RedeemPoin() {
   const rewards = [
     {
       id: 1,
