@@ -12,8 +12,8 @@ export default function Index() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight text-green-700">EcoPoints</h1>
             <p className="text-gray-700 text-lg">
-              EcoPoints adalah aplikasi yang mendorong pengguna untuk berpartisipasi dalam pengelolaan sampah dengan memberikan poin sebagai imbalan atas setiap
-              penyetoran sampah. Poin yang terkumpul dapat ditukarkan dengan hadiah atau diskon yang tersedia dalam aplikasi.
+              EcoPoints adalah aplikasi yang mendorong pengguna untuk berpartisipasi dalam pengelolaan sampah dengan memberikan poin sebagai imbalan atas setiap penyetoran sampah. Poin yang terkumpul dapat ditukarkan dengan hadiah atau
+              diskon yang tersedia dalam aplikasi.
             </p>
             <div className="flex gap-4">
               <Link
@@ -31,7 +31,7 @@ export default function Index() {
             </div>
           </div>
           <div className="hidden md:block w-[500px] h-[300px] overflow-hidden rounded-lg">
-            <img src="/eco-points.png" alt="EcoPoints" className="rounded-lg object-cover" />
+            <img src="/eco-points.png" alt="EcoPoints" className="rounded-lg object-cover h-full w-full" />
           </div>
         </div>
       </main>
