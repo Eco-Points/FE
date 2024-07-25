@@ -16,6 +16,7 @@ import WasteLocationPage from "@/pages/waste/location";
 import WasteDepositPage from "@/pages/waste/deposit";
 import WasteHistoryPage from "@/pages/waste/history";
 import AddRewardPage from "@/pages/admin/add-reward";
+import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -82,6 +83,10 @@ export default function Router() {
     {
       path: "/admin/add-reward",
       element: <AddRewardPage />,
+    },
+    {
+      path: "/admin/detail-waste-deposit",
+      element: <DetailWasteDepositPage />,
     },
   ]);
 
