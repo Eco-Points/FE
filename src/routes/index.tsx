@@ -15,7 +15,7 @@ import EditRewardPage from "@/pages/admin/edit-reward";
 import WasteLocationPage from "@/pages/waste/location";
 import WasteDepositPage from "@/pages/waste/deposit";
 import WasteHistoryPage from "@/pages/waste/history";
-
+import AddRewardPage from "@/pages/admin/add-reward";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -78,6 +78,10 @@ export default function Router() {
     {
       path: "/waste/history",
       element: <WasteHistoryPage />,
+    },
+    {
+      path: "/admin/add-reward",
+      element: <AddRewardPage />,
     },
   ]);
 
