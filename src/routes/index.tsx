@@ -9,6 +9,7 @@ import AdminDashboardPage from "@/pages/admin/dashboard";
 import ManageUserPage from "@/pages/admin/manage-user";
 import ReportsPage from "@/pages/admin/reports";
 import EditUserPage from "@/pages/admin/edit-user";
+import ManageRewardsPage from "@/pages/admin/manage-rewards";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -48,6 +49,10 @@ export default function Router() {
     {
       path: "/admin/edit-user",
       element: <EditUserPage />,
+    },
+    {
+      path: "/admin/manage-rewards",
+      element: <ManageRewardsPage />,
     },
   ]);
 
