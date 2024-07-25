@@ -1,7 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-
-
 import Homepage from "@/pages";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
@@ -10,6 +8,7 @@ import ProfilePage from "@/pages/users/profile";
 import AdminDashboardPage from "@/pages/admin/dashboard";
 import ManageUserPage from "@/pages/admin/manage-user";
 import ReportsPage from "@/pages/admin/reports";
+import ManageRewardsPage from "@/pages/admin/manage-rewards";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -45,6 +44,10 @@ export default function Router() {
     {
       path: "/admin/manage-user",
       element: <ManageUserPage />,
+    },
+    {
+      path: "/admin/manage-rewards",
+      element: <ManageRewardsPage />,
     },
   ]);
 
