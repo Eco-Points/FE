@@ -18,7 +18,7 @@ export default function Header() {
           <Link to={"/about"} className="hover:text-green-200">
             Tentang Kami
           </Link>
-          <Link to={"/contact"} className="hover:text-green-200">
+          <Link to={"/contact-us"} className="hover:text-green-200">
             Hubungi Kami
           </Link>
           <Link to={"/locations"} className="hover:text-green-200">

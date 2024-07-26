@@ -18,9 +18,10 @@ import WasteHistoryPage from "@/pages/waste/history";
 import AddRewardPage from "@/pages/admin/add-reward";
 import RedeemPointsPage from "@/pages/points/redeem";
 import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
-import DetailReedemPoinPage from "@/pages/points/detail-redeem";
+import DetailRedeemPoinPage from "@/pages/points/detail-redeem"; 
 import ContactUs from "@/pages/contactUs/contact-us";
-import DashboardUser from "@/pages/users/dashboard";
+import DashboardUser from "@/pages/users/dashboard"; 
+
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -98,7 +99,7 @@ export default function Router() {
     },
     {
       path: "/points/detail-redeem",
-      element: <DetailReedemPoinPage />,
+      element: <DetailRedeemPoinPage />, 
     },
     {
       path: "/admin/detail-waste-deposit",
