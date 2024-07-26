@@ -9,7 +9,7 @@ import Layout from "@/components/layout";
 
 export default function ManageRewards() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory] = useState("all");
   const [selectedPoints, setSelectedPoints] = useState("all");
   const rewards = [
     {
@@ -18,36 +18,42 @@ export default function ManageRewards() {
       points: 500,
       description: "Dapatkan bibit pohon untuk ditanam di lingkungan Anda.",
       createdAt: "2023-05-01",
+      category: "Organik",
     },
     {
       id: 2,
       name: "Tumbler Eksklusif",
       points: 300,
       description: "Dapatkan tumbler eksklusif dengan desain ramah lingkungan.",
+      category: "Fashion",
     },
     {
       id: 3,
       name: "Komposter Komersial",
       points: 800,
       description: "Komposter komersial untuk mengolah sampah organik Anda.",
+      category: "Peralatan",
     },
     {
       id: 4,
       name: "Buku Panduan Daur Ulang",
       points: 200,
       description: "Buku panduan lengkap tentang cara mendaur ulang berbagai jenis sampah.",
+      category: "Edukasi",
     },
     {
       id: 5,
       name: "Tas Belanja Ramah Lingkungan",
       points: 150,
       description: "Tas belanja yang terbuat dari bahan ramah lingkungan.",
+      category: "Fashion",
     },
     {
       id: 6,
       name: "Peralatan Kebun Organik",
       points: 400,
       description: "Peralatan kebun yang terbuat dari bahan organik.",
+      category: "Peralatan Dapur",
     },
   ];
   const filteredRewards = useMemo(() => {

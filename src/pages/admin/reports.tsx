@@ -4,10 +4,11 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { CartesianGrid, XAxis, Line, LineChart, Pie, PieChart } from "recharts";
+import { CartesianGrid, XAxis, Line, LineChart } from "recharts";
 import { ChartTooltipContent, ChartTooltip, ChartContainer } from "@/components/ui/chart";
 import Layout from "@/components/layout";
 import React from "react";
+import PiechartcustomChart from "../../components/ui/PiechartcustomChart";
 
 export default function Component() {
   return (
@@ -22,7 +23,7 @@ export default function Component() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="waste-type">Jenis Sampah</Label>
-                <Select id="waste-type">
+                <Select>
                   <SelectTrigger>
                     <SelectValue placeholder="Semua Jenis" />
                   </SelectTrigger>
@@ -36,7 +37,7 @@ export default function Component() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="location">Lokasi</Label>
-                <Select id="location">
+                <Select>
                   <SelectTrigger>
                     <SelectValue placeholder="Semua Lokasi" />
                   </SelectTrigger>
@@ -77,7 +78,7 @@ export default function Component() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="reward">Hadiah</Label>
-                <Select name="reward">
+                <Select>
                   <SelectTrigger>
                     <SelectValue placeholder="Semua Hadiah" />
                   </SelectTrigger>
@@ -90,7 +91,7 @@ export default function Component() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="user">Pengguna</Label>
-                <Select name="user">
+                <Select>
                   <SelectTrigger>
                     <SelectValue placeholder="Semua Pengguna" />
                   </SelectTrigger>
@@ -159,55 +160,6 @@ function LinechartChart(props: ChartProps) {
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Line dataKey="desktop" type="natural" stroke="var(--color-desktop)" strokeWidth={2} dot={false} />
         </LineChart>
-      </ChartContainer>
-    </div>
-  );
-}
-
-function PiechartcustomChart(props: ChartProps) {
-  return (
-    <div {...props}>
-      <ChartContainer
-        config={{
-          visitors: {
-            label: "Visitors",
-          },
-          chrome: {
-            label: "Chrome",
-            color: "hsl(var(--chart-1))",
-          },
-          safari: {
-            label: "Safari",
-            color: "hsl(var(--chart-2))",
-          },
-          firefox: {
-            label: "Firefox",
-            color: "hsl(var(--chart-3))",
-          },
-          edge: {
-            label: "Edge",
-            color: "hsl(var(--chart-4))",
-          },
-          other: {
-            label: "Other",
-            color: "hsl(var(--chart-5))",
-          },
-        }}
-      >
-        <PieChart>
-          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-          <Pie
-            data={[
-              { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-              { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-              { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-              { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-              { browser: "other", visitors: 90, fill: "var(--color-other)" },
-            ]}
-            dataKey="visitors"
-            nameKey="browser"
-          />
-        </PieChart>
       </ChartContainer>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
@@ -52,26 +52,23 @@ export default function VerifyWasteDeposit() {
       status: "Verified",
     },
   ]);
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  const handleFilterStatus = (status) => {
+  const handleFilterStatus = (status: string) => {
     setFilterStatus(status);
   };
-  const handleVerify = (id) => {
+  const handleVerify = (id: number) => {
     setDeposits(deposits.map((deposit) => (deposit.id === id ? { ...deposit, status: "Verified" } : deposit)));
   };
-  const handleReject = (id) => {
+  const handleReject = (id: number) => {
     setDeposits(deposits.map((deposit) => (deposit.id === id ? { ...deposit, status: "Rejected" } : deposit)));
   };
   const filteredDeposits = deposits.filter((deposit) => {
     if (filterStatus === "all") {
       return deposit.user.toLowerCase().includes(searchTerm.toLowerCase()) || deposit.type.toLowerCase().includes(searchTerm.toLowerCase());
     } else {
-      return (
-        deposit.status.toLowerCase() === filterStatus.toLowerCase() &&
-        (deposit.user.toLowerCase().includes(searchTerm.toLowerCase()) || deposit.type.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
+      return deposit.status.toLowerCase() === filterStatus.toLowerCase() && (deposit.user.toLowerCase().includes(searchTerm.toLowerCase()) || deposit.type.toLowerCase().includes(searchTerm.toLowerCase()));
     }
   });
   return (
@@ -80,12 +77,7 @@ export default function VerifyWasteDeposit() {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-green-900">Verifikasi Penyetoran Sampah</h1>
           <div className="flex items-center gap-2">
-            <Input
-              placeholder="Cari penyetoran..."
-              value={searchTerm}
-              onChange={handleSearch}
-              className="bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white"
-            />
+            <Input placeholder="Cari penyetoran..." value={searchTerm} onChange={handleSearch} className="bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white" />
             <Select value={filterStatus} onValueChange={handleFilterStatus}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter status" />
@@ -123,9 +115,7 @@ export default function VerifyWasteDeposit() {
                   <TableCell>{deposit.amount}</TableCell>
                   <TableCell>{deposit.date}</TableCell>
                   <TableCell>
-                    <Badge variant={deposit.status === "Pending" ? "secondary" : deposit.status === "Verified" ? "default" : "destructive"}>
-                      {deposit.status}
-                    </Badge>
+                    <Badge variant={deposit.status === "Pending" ? "secondary" : deposit.status === "Verified" ? "default" : "destructive"}>{deposit.status}</Badge>
                   </TableCell>
                   <TableCell>
                     {deposit.status === "Pending" && (
