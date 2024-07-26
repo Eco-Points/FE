@@ -2,9 +2,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { Button } from "react-day-picker";
 import Layout from "../../components/layout";
+
 export default function Component() {
   return (
     <Layout>
@@ -16,24 +16,24 @@ export default function Component() {
         <CardContent>
           <form className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">Name</Label>
+              <label htmlFor="name">Name</label>
               <Input id="name" placeholder="Enter your name" />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <label htmlFor="email">Email</label>
               <Input id="email" type="email" placeholder="Enter your email" />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="phone">Phone (optional)</Label>
+              <label htmlFor="phone">Phone (optional)</label>
               <Input id="phone" type="tel" placeholder="Enter your phone number" />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="message">Message</Label>
+              <label htmlFor="message">Message</label>
               <Textarea id="message" placeholder="Share your thoughts with us" className="min-h-[120px]" />
             </div>
             <div className="flex items-center gap-2">
               <Checkbox id="newsletter" />
-              <Label htmlFor="newsletter">Sign me up for the newsletter</Label>
+              <label htmlFor="newsletter">Sign me up for the newsletter</label>
             </div>
           </form>
         </CardContent>

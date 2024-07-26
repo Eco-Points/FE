@@ -136,7 +136,7 @@ const WasteLocation: React.FC = () => {
             Lihat Lokasi Saya
           </Button>
         </div>
-        <MapContainer center={[-6.17511, 106.865036]} zoom={13} style={{ height: "500px", width: "100%" }} whenReady={({ target }: any) => ((window as any).map = target)}>
+        <MapContainer center={userLocation ? [userLocation.latitude, userLocation.longitude] : [0, 0]} zoom={userLocation ? 13 : 2} style={{ height: "100%", width: "100%" }}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap contributors" />
           {userLocation && (
             <Marker position={[userLocation.latitude, userLocation.longitude]} icon={userIcon}>
