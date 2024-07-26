@@ -21,6 +21,7 @@ import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
 import DetailRedeemPoinPage from "@/pages/points/detail-redeem"; 
 import ContactUs from "@/pages/contactUs/contact-us";
 import DashboardUser from "@/pages/users/dashboard"; 
+import AboutUsPage from "@/pages/about";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -108,6 +109,10 @@ export default function Router() {
     {
       path: "/contact-us",
       element: <ContactUs />,
+    },
+    {
+      path: "/about",
+      element: <AboutUsPage />,
     },
   ]);
 
