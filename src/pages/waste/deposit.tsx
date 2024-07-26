@@ -55,7 +55,7 @@ export default function WasteDeposit() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar mode="single" />
+                <Calendar />
               </PopoverContent>
             </Popover>
           </div>

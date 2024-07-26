@@ -59,7 +59,7 @@ export default function Component() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar mode="range" />
+                    <Calendar /> {/* Removed mode="range" */}
                   </PopoverContent>
                 </Popover>
               </div>
@@ -112,7 +112,7 @@ export default function Component() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar mode="range" />
+                    <Calendar /> {/* Removed mode="range" */}
                   </PopoverContent>
                 </Popover>
               </div>
