@@ -2,8 +2,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "react-day-picker";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { DayPickerProvider, DayPickerProps } from "react-day-picker"; // Import DayPickerProvider and Calendar
 import Layout from "../../components/layout";
+import { Calendar } from "@/components/ui/calendar";
+
+const initialDayPickerProps: DayPickerProps = {
+  // Add the necessary props for the DayPicker component here
+  mode: "range", // Example prop
+  // Add other props as needed
+};
 
 export default function Component() {
   return (
@@ -41,6 +50,19 @@ export default function Component() {
           <Button type="submit">Send Message</Button>
         </CardFooter>
       </Card>
+      <DayPickerProvider initialProps={initialDayPickerProps}>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full justify-start font-normal">
+              <div className="mr-2 h-4 w-4 opacity-50" />
+              Pilih Rentang Tanggal
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar /> {/* Removed mode="range" */}
+          </PopoverContent>
+        </Popover>
+      </DayPickerProvider>
     </Layout>
   );
 }
