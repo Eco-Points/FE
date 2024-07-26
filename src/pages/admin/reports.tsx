@@ -112,7 +112,7 @@ export default function Component() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar /> {/* Removed mode="range" */}
+                    <Calendar disabled={(date) => date > new Date()} captionLayout="dropdown-buttons" fromDate={new Date("1900-01-01")} toDate={new Date()} initialFocus /> {/* Removed mode="range" */}
                   </PopoverContent>
                 </Popover>
               </div>
