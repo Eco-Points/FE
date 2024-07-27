@@ -1,26 +1,24 @@
-import { Control, ControllerRenderProps, FieldValues, FieldPath, Path } from "react-hook-form";
+import { Control, FieldValues, FieldPath, Controller } from "react-hook-form";
 import { ReactNode } from "react";
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 interface Props<T extends FieldValues> {
   name: FieldPath<T>;
   label: string;
-  placeholder?: string;
-  options?: unknown[];
   description?: string;
   control: Control<T>;
 }
 
 interface ChildrenProps<T extends FieldValues> extends Props<T> {
-  children: (field: ControllerRenderProps<T, Path<T>>) => ReactNode;
+  children: (field: { onChange: (value: any) => void; onBlur: () => void; value: any; name: string; ref: (instance: any) => void }) => ReactNode;
 }
 
 const CustomFormField = <T extends FieldValues>(props: ChildrenProps<T>) => {
   const { name, label, description, control, children } = props;
 
   return (
-    <FormField
+    <Controller
       control={control}
       name={name}
       render={({ field }) => (
