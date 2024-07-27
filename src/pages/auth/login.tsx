@@ -1,11 +1,52 @@
 import { FacebookIcon, TwitterIcon, InstagramIcon, LeafIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
+import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import Layout from "@/components/layout";
 
+import { loginSchema, LoginSchema } from "@/utils/types/auth";
+import { useToken } from "@/utils/contexts/token";
+import { userLogin } from "@/utils/apis/auth";
+
 export default function Login() {
+  const { changeToken, user } = useToken();
+  const navigate = useNavigate();
+
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  useEffect(() => {
+    if (user) {
+      if (user?.is_admin === true) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  }, [user, navigate]);
+
+  async function onSubmit(data: LoginSchema) {
+    try {
+      const response = await userLogin(data);
+      changeToken(response.data.token);
+      toast.success(response.message);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  }
+
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center py-4 md:py-8">
@@ -15,35 +56,43 @@ export default function Login() {
             <h1 className="text-3xl font-bold text-green-700">EcoPoints</h1>
           </div>
           <p className="text-gray-500 mb-6">Silakan masuk untuk melanjutkan.</p>
-          <form className="space-y-4">
-            <div>
-              <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Email"
-                className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-green-500"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
-                Kata Sandi
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Kata Sandi"
-                className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-green-500"
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md">
-              Masuk
-            </Button>
-          </form>
+          <Form {...form}>
+            <form data-testid="form-login" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <CustomFormField control={form.control} name="email" label="Email">
+                {(field) => (
+                  <Input
+                    data-testid="input-email"
+                    placeholder="johndoe@mail.com"
+                    type="email"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
+                )}
+              </CustomFormField>
+              <CustomFormField control={form.control} name="password" label="Password">
+                {(field) => (
+                  <Input
+                    data-testid="input-password"
+                    placeholder="Password"
+                    type="password"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
+                )}
+              </CustomFormField>
+              <Button
+                data-testid="btn-submit"
+                type="submit"
+                className="w-full bg-green-700 hover:bg-green-800 text-white"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              >
+                Masuk
+              </Button>
+            </form>
+          </Form>
           <div className="text-center mt-4">
             <p className="text-green-500">
               Belum punya akun?{" "}
