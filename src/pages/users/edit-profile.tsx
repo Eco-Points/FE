@@ -25,7 +25,6 @@ const EditProfile = () => {
       email: user?.email ?? "",
       phone: user?.phone ?? "",
       address: user?.address ?? "",
-      password: "",
       profile_picture: new File([], ""),
     },
   });
@@ -84,9 +83,6 @@ const EditProfile = () => {
                   </CustomFormField>
                   <CustomFormField name="address" label="Alamat" control={control}>
                     {(field) => <Textarea {...field} placeholder="Masukkan alamat" />}
-                  </CustomFormField>
-                  <CustomFormField name="password" label="Password" control={control}>
-                    {(field) => <Input {...field} type="password" placeholder="Masukkan password baru (opsional)" />}
                   </CustomFormField>
                 </div>
                 <CustomFormField control={methods.control} name="profile_picture" label="Profile Picture" description="Upload your profile picture">
