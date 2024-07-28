@@ -1,10 +1,28 @@
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Layout from "@/components/layout";
+import { editUserStatus } from "@/utils/apis/admin-user";
+import { toast } from "sonner";
 
 export default function EditUser() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [status, setStatus] = useState<string>("");
+
+  const handleSave = async () => {
+    try {
+      await editUserStatus(parseInt(id), status);
+      toast.success("Status pengguna berhasil diperbarui!");
+      navigate("/admin/manage-users");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   const userData = {
     name: "John Doe",
     email: "johndoe@example.com",
@@ -41,7 +59,7 @@ export default function EditUser() {
 
               <div className="grid gap-3">
                 <Label htmlFor="status">Status Akun</Label>
-                <Select>
+                <Select onValueChange={(value) => setStatus(value)}>
                   <SelectTrigger id="status" aria-label="Pilih status akun">
                     <SelectValue placeholder="Pilih status" />
                   </SelectTrigger>
@@ -55,10 +73,12 @@ export default function EditUser() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-end gap-2">
-            <Button variant="ghost" className="text-muted-foreground">
+            <Button variant="ghost" className="text-muted-foreground" onClick={() => navigate("/admin/manage-users")}>
               Batalkan
             </Button>
-            <Button className="bg-green-700 text-white hover:bg-green-800">Simpan Perubahan</Button>
+            <Button className="bg-green-700 text-white hover:bg-green-800" onClick={handleSave}>
+              Simpan Perubahan
+            </Button>
           </CardFooter>
         </Card>
       </div>
