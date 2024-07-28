@@ -59,7 +59,7 @@ export default function Router() {
       element: <AdminDashboardPage />,
     },
     {
-      path: "/admin/manage-user",
+      path: "/admin/manage-users",
       element: <ManageUserPage />,
     },
     {

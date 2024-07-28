@@ -69,7 +69,7 @@ export default function ManageUser() {
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.register_datetime}</TableCell>
                     <TableCell>
-                      <Badge variant={user.status === "Active" ? "secondary" : user.status === "Suspended" ? "outline" : "default"}>{user.status}</Badge>
+                      <Badge variant={user.status === "active" ? "secondary" : user.status === "suspended" ? "outline" : "default"}>{user.status}</Badge>
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
