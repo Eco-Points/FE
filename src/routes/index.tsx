@@ -99,7 +99,7 @@ export default function Router() {
       element: <RedeemPointsPage />,
     },
     {
-      path: "/points/detail-redeem",
+      path: "/points/detail-redeem/:reward_id",
       element: <DetailRedeemPoinPage />,
     },
     {
