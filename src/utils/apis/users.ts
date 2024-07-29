@@ -2,7 +2,7 @@ import axiosWithConfig from "./axios-with-config";
 import { EditProfileType, ProfileType } from "../types/users";
 import { IResponse } from "../types/api";
 import { EditProfileSchema } from "../types/users";
-import { checkProperty, valueFormatData } from "@/function";
+import { checkProperty, valueFormatData } from "@/utils/function";
 
 export const getProfile = async () => {
   try {

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MAX_MB, MAX_UPLOAD_SIZE, ACCEPTED_IMAGE_TYPES } from "@/const";
+import { MAX_MB, MAX_UPLOAD_SIZE, ACCEPTED_IMAGE_TYPES } from "@/utils/const";
 
 export const editProfileSchema = z.object({
   fullname: z.string().min(1, { message: "Full name is required" }),

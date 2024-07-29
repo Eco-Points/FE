@@ -26,9 +26,3 @@ export const valueFormatData = (value: any) => {
   return String(value);
 };
 
-export const formatCurrency = (number: number) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  }).format(number);
-};
