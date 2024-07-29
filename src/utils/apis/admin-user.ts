@@ -23,3 +23,14 @@ export const editUserStatus = async (userId: number, status: string) => {
     throw Error(message);
   }
 };
+
+export const getDashboard = async () => {
+  try {
+    const response = await axiosWithConfig.get("/dashboard");
+    console.log("API response:", response.data);
+    return response.data.data;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};

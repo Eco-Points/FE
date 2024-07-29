@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { getDashboard } from "@/utils/apis/admin-user";
+import { dashboardType } from "../../utils/types/admin";
+
 import { BarChartIcon, GiftIcon, UsersIcon, WalletIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -5,6 +9,37 @@ import { Card, CardHeader, CardDescription, CardTitle, CardFooter } from "@/comp
 import Layout from "@/components/layout";
 
 export default function AdminDashboard() {
+  const [dashboardData, setDashboardData] = useState<dashboardType | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDashboard();
+        setDashboardData(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!dashboardData) {
+    return <div>No data available</div>;
+  }
+
   return (
     <Layout>
       <div className="flex flex-col my-4 md:my-12 md:mx-6">
@@ -18,19 +53,19 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardDescription>Total Pengguna</CardDescription>
-                <CardTitle>12.345</CardTitle>
+                <CardTitle>{dashboardData.users}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <CardDescription>Total Setoran</CardDescription>
-                <CardTitle>678</CardTitle>
+                <CardTitle>{dashboardData.waste_deposit}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <CardDescription>Hadiah Ditukarkan</CardDescription>
-                <CardTitle>3.456</CardTitle>
+                <CardTitle>{dashboardData.reward_exchange}</CardTitle>
               </CardHeader>
             </Card>
           </div>
@@ -41,7 +76,7 @@ export default function AdminDashboard() {
                 <CardDescription>Kelola akun dan profil pengguna.</CardDescription>
               </CardHeader>
               <CardFooter>
-                <Link to="/admin/manage-user" className="inline-flex items-center gap-2 text-green-600">
+                <Link to="/admin/manage-users" className="inline-flex items-center gap-2 text-green-600">
                   <UsersIcon className="h-4 w-4" />
                   Lihat Pengguna
                 </Link>
