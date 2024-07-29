@@ -132,7 +132,7 @@ const WasteLocation: React.FC = () => {
           <Button onClick={handleFindNearest} className="bg-green-600 text-white hover:bg-green-700">
             Cari Lokasi Terdekat
           </Button>
-          <Button onClick={handleViewMyLocation} className="bg-blue-600 text-white hover:bg-blue-700" disabled={!userLocation}>
+          <Button onClick={handleViewMyLocation} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white" disabled={!userLocation}>
             Lihat Lokasi Saya
           </Button>
         </div>
@@ -154,7 +154,7 @@ const WasteLocation: React.FC = () => {
                 <br />
                 {location.wasteTypes.join(", ")}
                 <br />
-                <Button onClick={() => handleNavigate(location)} className="bg-yellow-600 text-white hover:bg-yellow-700 mt-2">
+                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2 ">
                   Arahkan ke Lokasi
                 </Button>
               </Popup>
@@ -163,7 +163,7 @@ const WasteLocation: React.FC = () => {
           <MapWithCenter />
         </MapContainer>
       </div>
-      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px]">
+      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px] ">
         <h2 className="text-xl font-bold mb-4">Daftar Lokasi Waste</h2>
         <ul>
           {nearestLocations.map((location) => (
@@ -176,7 +176,7 @@ const WasteLocation: React.FC = () => {
               <br />
               {location.wasteTypes.join(", ")}
               <br />
-              <Button onClick={() => handleNavigate(location)} className="bg-yellow-600 text-white hover:bg-yellow-700 mt-2">
+              <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white  mt-2">
                 Arahkan ke Lokasi
               </Button>
             </li>
