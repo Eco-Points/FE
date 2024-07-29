@@ -1,6 +1,7 @@
 import { CheckIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
@@ -10,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
 
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
-import { getDeposit } from "@/utils/apis/admin-waste-deposit";
+import { getDeposit, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 
 export default function VerifyWasteDeposit() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,15 +34,31 @@ export default function VerifyWasteDeposit() {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
   const handleFilterStatus = (status: string) => {
     setFilterStatus(status);
   };
-  const handleVerify = (id: number) => {
-    setDeposits(deposits.map((deposit) => (deposit.id === id ? { ...deposit, status: "Verified" } : deposit)));
+
+  const handleVerify = async (waste_id: number) => {
+    try {
+      await updateDepositStatus(waste_id, "verified");
+      setDeposits(deposits.map((deposit) => (deposit.id === waste_id ? { ...deposit, status: "verified" } : deposit)));
+      toast.success("Penyetoran sampah berhasil diverifikasi.");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
-  const handleReject = (id: number) => {
-    setDeposits(deposits.map((deposit) => (deposit.id === id ? { ...deposit, status: "Rejected" } : deposit)));
+
+  const handleReject = async (waste_id: number) => {
+    try {
+      await updateDepositStatus(waste_id, "rejected");
+      setDeposits(deposits.map((deposit) => (deposit.id === waste_id ? { ...deposit, status: "rejected" } : deposit)));
+      toast.success("Penyetoran sampah berhasil ditolak.");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
+
   const filteredDeposits = deposits.filter((deposit) => {
     if (filterStatus === "all") {
       return deposit.fullname.toLowerCase().includes(searchTerm.toLowerCase()) || deposit.type.toLowerCase().includes(searchTerm.toLowerCase());

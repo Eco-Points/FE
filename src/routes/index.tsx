@@ -103,7 +103,7 @@ export default function Router() {
       element: <DetailRedeemPoinPage />,
     },
     {
-      path: "/admin/detail-waste-deposit",
+      path: "/admin/deposit/:deposit_id",
       element: <DetailWasteDepositPage />,
     },
     {
