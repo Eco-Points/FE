@@ -15,3 +15,7 @@ export interface detailRewardsType {
   point_required: number;
   stock: number;
 }
+
+export interface exchangeRewards {
+  reward_id: number;
+}
