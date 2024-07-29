@@ -46,7 +46,7 @@ const RedeemPoin = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {rewards.map((reward) => (
-              <Link to="/points/detail-redeem" key={reward.reward_id}>
+              <Link to={`/points/detail-redeem/${reward.reward_id}`} key={reward.reward_id}>
                 <div className="bg-white rounded-lg p-4 flex flex-col shadow-md">
                   <img src={reward.image} alt={reward.name} className="mb-4 w-full" />
                   <h3 className="text-lg font-bold text-start text-green-700 mb-2">{reward.name}</h3>
