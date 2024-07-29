@@ -35,3 +35,14 @@ export const detailRewards = async (reward_id: number): Promise<detailRewardsTyp
     throw error;
   }
 };
+
+export const exchangeRewards = async (reward_id: number) => {
+  try {
+    const response = await axiosWithConfig.post(`/exchange`);
+    console.log("Rewards response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching rewards:", error);
+    throw error;
+  }
+};

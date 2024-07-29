@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
 import { detailRewards } from "@/utils/apis/rewards";
+import { exchangeRewards } from "@/utils/apis/rewards";
 import { detailRewardsType } from "@/utils/types/rewards";
 
 export default function DetailRedeem() {
@@ -10,6 +11,9 @@ export default function DetailRedeem() {
   const [reward, setReward] = useState<detailRewardsType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [redeeming, setRedeeming] = useState<boolean>(false); // State untuk proses penukaran
+  const [redeemError, setRedeemError] = useState<string | null>(null); // State untuk error penukaran
+  const [redeemed, setRedeemed] = useState<boolean>(false); // State untuk melacak status penukaran berhasil
 
   useEffect(() => {
     const fetchReward = async () => {
@@ -31,6 +35,27 @@ export default function DetailRedeem() {
 
     fetchReward();
   }, [reward_id]);
+
+  const handleRedeem = async () => {
+    if (!reward_id) {
+      setRedeemError("Reward ID is missing.");
+      return;
+    }
+
+    setRedeeming(true);
+    setRedeemError(null);
+
+    try {
+      const response = await exchangeRewards(parseInt(reward_id, 10)); // Pastikan reward_id adalah integer
+      console.log("Redeem success:", response);
+      setRedeemed(true); // Mengatur state redeemed menjadi true jika penukaran berhasil
+      // Tambahkan logika tambahan jika perlu, seperti menampilkan pesan sukses atau memperbarui state
+    } catch (error: any) {
+      setRedeemError(error.message);
+    } finally {
+      setRedeeming(false);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -58,9 +83,15 @@ export default function DetailRedeem() {
                 Upgrade your listening experience with our state-of-the-art wireless headphones. Featuring advanced noise-cancelling technology, premium sound quality, and a sleek, comfortable design, these headphones will transport you to
                 a new level of audio bliss.
               </p>
-              <Button size="lg" className="w-full bg-green-700">
-                Redeem Points
+              <Button
+                size="lg"
+                className="w-full bg-green-700"
+                onClick={handleRedeem}
+                disabled={redeeming || redeemed} // Disabled jika sedang proses penukaran atau sudah berhasil
+              >
+                {redeeming ? "Redeeming..." : redeemed ? "Sudah Ditukar" : "Redeem Points"} {/* Teks tombol */}
               </Button>
+              {redeemError && <p className="text-red-600 mt-2">{redeemError}</p>} {/* Tampilkan error jika ada */}
             </div>
           </div>
         </div>
