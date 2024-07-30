@@ -1,21 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Layout from "@/components/layout";
-import { editUserStatus } from "@/utils/apis/admin-user";
+import { editUserStatus, getUserById } from "@/utils/apis/admin-user";
 import { toast } from "sonner";
+import { ProfileType } from "@/utils/types/users";
 
 export default function EditUser() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [status, setStatus] = useState<string>("");
+  const [userData, setUserData] = useState<ProfileType | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await getUserById(parseInt(id!));
+        setUserData(data);
+        setStatus(data.status); // Setel status awal dari data pengguna
+      } catch (error: any) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, [id]);
 
   const handleSave = async () => {
     try {
-      await editUserStatus(parseInt(id), status);
+      await editUserStatus(parseInt(id!), status);
       toast.success("Status pengguna berhasil diperbarui!");
       navigate("/admin/manage-users");
     } catch (error: any) {
@@ -23,12 +39,9 @@ export default function EditUser() {
     }
   };
 
-  const userData = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "081234567890",
-    address: "Jl. Contoh No. 123, Jakarta",
-  };
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Layout>
@@ -42,7 +55,7 @@ export default function EditUser() {
             <div className="grid gap-4">
               <div>
                 <Label>Nama Pengguna</Label>
-                <p>{userData.name}</p>
+                <p>{userData.fullname}</p>
               </div>
               <div>
                 <Label>Email</Label>
@@ -59,7 +72,7 @@ export default function EditUser() {
 
               <div className="grid gap-3">
                 <Label htmlFor="status">Status Akun</Label>
-                <Select onValueChange={(value) => setStatus(value)}>
+                <Select onValueChange={(value) => setStatus(value)} value={status}>
                   <SelectTrigger id="status" aria-label="Pilih status akun">
                     <SelectValue placeholder="Pilih status" />
                   </SelectTrigger>
