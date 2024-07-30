@@ -8,7 +8,7 @@ export const setAxiosConfig = (token: string) => {
 };
 
 axiosWithConfig.interceptors.request.use((axiosConfig) => {
-  axiosConfig.baseURL = "https://virtserver.swaggerhub.com/TNLKFANS/EchoPoint/1.0.0";
+  axiosConfig.baseURL = "https://two.ybtech.online";
 
   if (bearerToken !== "") {
     axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
