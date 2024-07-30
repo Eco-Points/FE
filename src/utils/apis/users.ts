@@ -6,7 +6,7 @@ import { checkProperty, valueFormatData } from "@/utils/function";
 
 export const getProfile = async () => {
   try {
-    const response = await axiosWithConfig.get("/user");
+    const response = await axiosWithConfig.get("/users");
     return response.data as IResponse<ProfileType>;
   } catch (error: any) {
     const { message } = error.response.data;
@@ -24,7 +24,7 @@ export const editProfile = async (body: EditProfileSchema): Promise<EditProfileT
         formData.append(key, valueFormatData(body[key]));
       }
     }
-    const response = await axiosWithConfig.put<EditProfileType>("/user", formData, {
+    const response = await axiosWithConfig.put<EditProfileType>("/users", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

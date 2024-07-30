@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
 
+import { getDepositAdmin, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
-import { getDeposit, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 
 export default function VerifyWasteDeposit() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,8 +24,8 @@ export default function VerifyWasteDeposit() {
 
   async function fetchDeposits() {
     try {
-      const response = await getDeposit();
-      setDeposits(response.data);
+      const response = await getDepositAdmin();
+      setDeposits(response.data || []);
     } catch (error) {
       console.error(error);
     }

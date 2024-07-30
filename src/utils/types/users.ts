@@ -33,6 +33,7 @@ export interface ProfileType {
   image_url: string;
   is_admin: boolean;
   point: number;
+  status: string;
 }
 
 export interface getUsersType {
