@@ -34,6 +34,7 @@ export interface ProfileType {
   is_admin: boolean;
   point: number;
   status: string;
+  profile_picture: string;
 }
 
 export interface getUsersType {
