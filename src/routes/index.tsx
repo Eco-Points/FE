@@ -23,6 +23,7 @@ import ContactUs from "@/pages/contactUs/contact-us";
 import DashboardUser from "@/pages/users/dashboard";
 import AboutUsPage from "@/pages/about";
 import NotFoundPage from "@/pages/not-found";
+import SuspendPage from "@/pages/suspend";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -114,6 +115,10 @@ export default function Router() {
     {
       path: "/about",
       element: <AboutUsPage />,
+    },
+    {
+      path: "/suspend",
+      element: <SuspendPage />,
     },
     {
       path: "*",

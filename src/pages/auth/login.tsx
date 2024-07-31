@@ -29,7 +29,9 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      if (user?.is_admin === true) {
+      if (user?.status === "suspended") {
+        navigate("/suspend");
+      } else if (user?.is_admin) {
         navigate("/admin/dashboard");
       } else {
         navigate("/dashboard");
