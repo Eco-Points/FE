@@ -25,111 +25,140 @@ import AboutUsPage from "@/pages/about";
 import NotFoundPage from "@/pages/not-found";
 import SuspendPage from "@/pages/suspend";
 import AddLocationPage from "@/pages/admin/add-location";
+import ProtectedRoute from "./protected-route";
 
 export default function Router() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      loader: () => "Home | ECO-POINTS",
-      element: <Homepage />,
-    },
-    {
-      path: "/login",
-      element: <LoginPage />,
-    },
-    {
-      path: "/register",
-      element: <RegisterPage />,
-    },
-    {
-      path: "/profile",
-      element: <ProfilePage />,
-    },
-    {
-      path: "/profile/edit",
-      element: <EditProfilePage />,
-    },
-    {
-      path: "/dashboard",
-      element: <DashboardUser />,
-    },
-    {
-      path: "/admin/reports",
-      element: <ReportsPage />,
-    },
-    {
-      path: "/admin/dashboard",
-      element: <AdminDashboardPage />,
-    },
-    {
-      path: "/admin/manage-users",
-      element: <ManageUserPage />,
-    },
-    {
-      path: "/admin/edit-user/:id",
-      element: <EditUserPage />,
-    },
-    {
-      path: "/admin/manage-rewards",
-      element: <ManageRewardsPage />,
-    },
-    {
-      path: "/admin/verify-waste-deposit",
-      element: <VerifyWasteDepositPage />,
-    },
-    {
-      path: "/admin/edit-reward/:reward_id",
-      element: <EditRewardPage />,
-    },
-    {
-      path: "/locations",
-      element: <WasteLocationPage />,
-    },
-    {
-      path: "/waste/deposit",
-      element: <WasteDepositPage />,
-    },
-    {
-      path: "/waste/history",
-      element: <WasteHistoryPage />,
-    },
-    {
-      path: "/admin/add-reward",
-      element: <AddRewardPage />,
-    },
-    {
-      path: "/points/redeem",
-      element: <RedeemPointsPage />,
-    },
-    {
-      path: "/admin/add-location",
-      element: <AddLocationPage />,
-    },
-    {
-      path: "/points/detail-redeem/:reward_id",
-      element: <DetailRedeemPoinPage />,
-    },
-    {
-      path: "/admin/deposit/:deposit_id",
-      element: <DetailWasteDepositPage />,
-    },
-    {
-      path: "/contact-us",
-      element: <ContactUs />,
-    },
-    {
-      path: "/about",
-      element: <AboutUsPage />,
-    },
-    {
-      path: "/suspend",
-      element: <SuspendPage />,
-    },
-    {
-      path: "*",
-      element: <NotFoundPage />,
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "/",
+          loader: () => "Home | Eco-Points",
+          element: <Homepage />,
+        },
+        {
+          path: "/login",
+          loader: () => "Login | Eco-Points",
+          element: <LoginPage />,
+        },
+        {
+          path: "/register",
+          loader: () => "Register | Eco-Points",
+          element: <RegisterPage />,
+        },
+        {
+          path: "/profile",
+          loader: () => "Profile | Eco-Points",
+          element: <ProfilePage />,
+        },
+        {
+          path: "/profile/edit",
+          loader: () => "Edit Profile | Eco-Points",
+          element: <EditProfilePage />,
+        },
+        {
+          path: "/dashboard",
+          loader: () => "Dashboard | Eco-Points",
+          element: <DashboardUser />,
+        },
+        {
+          loader: () => "Admin Reports | Eco-Points",
+          path: "/admin/reports",
+          element: <ReportsPage />,
+        },
+        {
+          path: "/admin/dashboard",
+          loader: () => "Admin Dashboard | Eco-Points",
+          element: <AdminDashboardPage />,
+        },
+        {
+          path: "/admin/manage-users",
+          loader: () => "Manage Users | Eco-Points",
+          element: <ManageUserPage />,
+        },
+        {
+          path: "/admin/edit-user/:id",
+          loader: () => "Edit User | Eco-Points",
+          element: <EditUserPage />,
+        },
+        {
+          path: "/admin/manage-rewards",
+          loader: () => "Manage Rewards | Eco-Points",
+          element: <ManageRewardsPage />,
+        },
+        {
+          path: "/admin/verify-waste-deposit",
+          loader: () => "Verify Waste Deposit | Eco-Points",
+          element: <VerifyWasteDepositPage />,
+        },
+        {
+          path: "/admin/edit-reward/:reward_id",
+          loader: () => "Edit Reward | Eco-Points",
+          element: <EditRewardPage />,
+        },
+        {
+          path: "/locations",
+          loader: () => "Waste Locations | Eco-Points",
+          element: <WasteLocationPage />,
+        },
+        {
+          path: "/waste/deposit",
+          loader: () => "Waste Deposit | Eco-Points",
+          element: <WasteDepositPage />,
+        },
+        {
+          path: "/waste/history",
+          loader: () => "Waste History | Eco-Points",
+          element: <WasteHistoryPage />,
+        },
+        {
+          path: "/admin/add-reward",
+          loader: () => "Add Reward | Eco-Points",
+          element: <AddRewardPage />,
+        },
+        {
+          path: "/points/redeem",
+          loader: () => "Redeem Points | Eco-Points",
+          element: <RedeemPointsPage />,
+        },
+        {
+          path: "/admin/add-location",
+          loader: () => "Add Location | Eco-Points",
+          element: <AddLocationPage />,
+        },
+        {
+          path: "/points/detail-redeem/:reward_id",
+          loader: () => "Detail Redeem | Eco-Points",
+          element: <DetailRedeemPoinPage />,
+        },
+        {
+          path: "/admin/deposit/:deposit_id",
+          loader: () => "Detail Waste Deposit | Eco-Points",
+          element: <DetailWasteDepositPage />,
+        },
+        {
+          path: "/contact-us",
+          loader: () => "Contact Us | Eco-Points",
+          element: <ContactUs />,
+        },
+        {
+          path: "/about",
+          loader: () => "About Us | Eco-Points",
+          element: <AboutUsPage />,
+        },
+        {
+          path: "/suspend",
+          loader: () => "Account Suspended | Eco-Points",
+          element: <SuspendPage />,
+        },
+        {
+          path: "*",
+          loader: () => "Not Found | Eco-Points",
+          element: <NotFoundPage />,
+        },
+      ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
