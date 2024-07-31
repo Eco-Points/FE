@@ -7,9 +7,3 @@ export const TRASH_OPTIONS = [
   { value: 2, label: "Plastik" },
   { value: 3, label: "Logam" },
 ];
-
-export const LOCATION_OPTIONS = [
-  { value: 1, label: "Lokasi A" },
-  { value: 2, label: "Lokasi B" },
-  { value: 3, label: "Lokasi C" },
-];
