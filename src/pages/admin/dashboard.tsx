@@ -17,6 +17,7 @@ export default function AdminDashboard() {
     const fetchData = async () => {
       try {
         const data = await getDashboard();
+        console.log("Data received from API:", data);
         setDashboardData(data);
       } catch (err: any) {
         setError(err.message);
@@ -53,19 +54,19 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardDescription>Total Pengguna</CardDescription>
-                <CardTitle>{dashboardData.users}</CardTitle>
+                <CardTitle>{dashboardData.user_count}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <CardDescription>Total Setoran</CardDescription>
-                <CardTitle>{dashboardData.waste_deposit}</CardTitle>
+                <CardTitle>{dashboardData.deposit_count}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <CardDescription>Hadiah Ditukarkan</CardDescription>
-                <CardTitle>{dashboardData.reward_exchange}</CardTitle>
+                <CardTitle>{dashboardData.exchange_count}</CardTitle>
               </CardHeader>
             </Card>
           </div>

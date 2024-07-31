@@ -61,37 +61,36 @@ export default function ManageUser() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Array.isArray(users) &&
-                users.map((user, index) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{user.fullname}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.register_datetime}</TableCell>
-                    <TableCell>
-                      <Badge variant={user.status === "active" ? "secondary" : user.status === "suspended" ? "outline" : "default"}>{user.status}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full">
-                            <MoveVerticalIcon className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <FilePenIcon className="h-4 w-4 mr-2" />
-                            <Link to={`/admin/edit-user/${user.id}`}>Edit</Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <TrashIcon className="h-4 w-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {users.map((user, index) => (
+                <TableRow key={user.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{user.fullname}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.register_datetime || "N/A"}</TableCell>
+                  <TableCell>
+                    <Badge variant={user.status === "active" ? "secondary" : user.status === "suspended" ? "outline" : "default"}>{user.status || "Unknown"}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full">
+                          <MoveVerticalIcon className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <FilePenIcon className="h-4 w-4 mr-2" />
+                          <Link to={`/admin/edit-user/${user.id}`}>Edit</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <TrashIcon className="h-4 w-4 mr-2" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

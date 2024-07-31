@@ -1,5 +1,5 @@
 export interface dashboardType {
-  waste_deposit: number;
-  users: number;
-  reward_exchange: number;
+  deposit_count: number;
+  user_count: number;
+  exchange_count: number;
 }
