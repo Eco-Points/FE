@@ -37,9 +37,9 @@ export interface ProfileType {
 }
 
 export interface getUsersType {
-  id: number;
-  fullname: string;
   email: string;
+  fullname: string;
+  id: number;
+  registered_date: string;
   status: string;
-  register_datetime: string;
 }
