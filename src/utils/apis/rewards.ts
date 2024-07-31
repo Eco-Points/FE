@@ -1,6 +1,7 @@
+import { checkProperty, valueFormatData } from "../function";
 import { IResponse } from "../types/api";
 import axiosWithConfig from "./axios-with-config";
-import { IReward, detailRewardsType } from "@/utils/types/rewards";
+import { AddRewardSchema, IReward, detailRewardsType } from "@/utils/types/rewards";
 
 interface RewardsResponse {
   data: IReward[];
