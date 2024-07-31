@@ -46,7 +46,7 @@ export default function DetailRedeem() {
     setRedeemError(null);
 
     try {
-      const response = await exchangeRewards(parseInt(reward_id, 10)); // Pastikan reward_id adalah integer
+      const response = await exchangeRewards(parseInt(reward_id, 10));
       console.log("Redeem success:", response);
       setRedeemed(true); // Mengatur state redeemed menjadi true jika penukaran berhasil
       // Tambahkan logika tambahan jika perlu, seperti menampilkan pesan sukses atau memperbarui state
