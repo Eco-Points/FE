@@ -1,7 +1,7 @@
+import { AddRewardSchema, EditRewardSchema, IReward, detailRewardsType } from "@/utils/types/rewards";
 import { checkProperty, valueFormatData } from "../function";
-import { IResponse } from "../types/api";
 import axiosWithConfig from "./axios-with-config";
-import { AddRewardSchema, IReward, detailRewardsType } from "@/utils/types/rewards";
+import { IResponse } from "../types/api";
 
 interface RewardsResponse {
   data: IReward[];
@@ -70,6 +70,34 @@ export const addReward = async (body: AddRewardSchema) => {
       }
     }
     const response = await axiosWithConfig.post(`/reward`, formData);
+    return response.data as IResponse<IReward>;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};
+
+export const updateReward = async (reward_id: number, body: EditRewardSchema) => {
+  try {
+    const formData = new FormData();
+    let key: keyof typeof body;
+
+    for (key in body) {
+      if (checkProperty(body[key])) {
+        formData.append(key, valueFormatData(body[key]));
+      }
+    }
+    const response = await axiosWithConfig.put(`/reward/${reward_id}`, formData);
+    return response.data as IResponse<IReward>;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};
+
+export const deleteReward = async (reward_id: number) => {
+  try {
+    const response = await axiosWithConfig.delete(`/reward/${reward_id}`);
     return response.data as IResponse<IReward>;
   } catch (error: any) {
     const { message } = error.response.data;
