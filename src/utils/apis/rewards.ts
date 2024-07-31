@@ -1,7 +1,6 @@
-import { checkProperty, valueFormatData } from "../function";
 import { IResponse } from "../types/api";
 import axiosWithConfig from "./axios-with-config";
-import { AddRewardSchema, IReward, detailRewardsType } from "@/utils/types/rewards";
+import { IReward, detailRewardsType } from "@/utils/types/rewards";
 
 interface RewardsResponse {
   data: IReward[];
@@ -40,7 +39,7 @@ export const detailRewards = async (reward_id: number): Promise<detailRewardsTyp
 
 export const exchangeRewards = async (reward_id: number) => {
   try {
-    const response = await axiosWithConfig.post(`/exchange`);
+    const response = await axiosWithConfig.post(`/exchange/${reward_id}`);
     console.log("Rewards response:", response.data);
     return response.data;
   } catch (error) {
