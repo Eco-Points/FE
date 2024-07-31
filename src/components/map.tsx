@@ -3,24 +3,12 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Button } from "../components/ui/button";
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
-interface Location {
-  id: number;
-  name: string;
-  address: string;
-  openHours: string;
-  wasteTypes: string[];
-  coordinates: Coordinates;
-}
+import { getlocation } from "../utils/apis/waste-location";
+import { IGetLocation } from "@/utils/types/waste-location";
 
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
   const toRad = (value: number) => (value * Math.PI) / 180;
-  const R = 6371; // Radius BUMI in km
+  const R = 6371; // Radius Earth in km
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
   const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -29,40 +17,50 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): nu
 };
 
 const WasteLocation: React.FC = () => {
-  const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
-  const [nearestLocations, setNearestLocations] = useState<Location[]>([]);
-  // const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [nearestLocations, setNearestLocations] = useState<IGetLocation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Dummy data for locations
-  const locations: Location[] = [
-    { id: 1, name: "Pusat Daur Ulang Kota", address: "Jl. Raya Kota No. 123, Kota", openHours: "08:00 - 17:00", wasteTypes: ["plastik", "kertas", "logam"], coordinates: { latitude: -6.17511, longitude: 106.865036 } },
-    { id: 2, name: "Tempat Pengumpulan Sampah Daur Ulang", address: "Jl. Hijau No. 45, Kota", openHours: "09:00 - 16:00", wasteTypes: ["plastik", "kertas", "kaca"], coordinates: { latitude: -6.17486, longitude: 106.866254 } },
-    { id: 3, name: "Tempat Daur Ulang Jakarta", address: "Jl. Merah No. 12, Jakarta", openHours: "07:00 - 18:00", wasteTypes: ["plastik", "kertas"], coordinates: { latitude: -6.17, longitude: 106.84 } },
-    { id: 4, name: "Pusat Pengumpulan Sampah", address: "Jl. Biru No. 77, Jakarta", openHours: "08:00 - 15:00", wasteTypes: ["kaca", "logam"], coordinates: { latitude: -6.18, longitude: 106.855 } },
-    { id: 5, name: "Kantor Daur Ulang", address: "Jl. Kuning No. 88, Jakarta", openHours: "10:00 - 20:00", wasteTypes: ["plastik", "kertas"], coordinates: { latitude: -6.19, longitude: 106.87 } },
-    { id: 6, name: "Tempat Sampah Daur Ulang", address: "Jl. Orange No. 55, Jakarta", openHours: "08:00 - 17:00", wasteTypes: ["logam", "kaca"], coordinates: { latitude: -6.2, longitude: 106.86 } },
-    { id: 7, name: "Pusat Pengolahan Sampah", address: "Jl. Hijau No. 10, Jakarta", openHours: "09:00 - 16:00", wasteTypes: ["plastik", "kertas"], coordinates: { latitude: -6.21, longitude: 106.85 } },
-    { id: 8, name: "Sampah Daur Ulang Area", address: "Jl. Putih No. 45, Jakarta", openHours: "07:00 - 19:00", wasteTypes: ["kaca", "plastik"], coordinates: { latitude: -6.22, longitude: 106.845 } },
-    { id: 9, name: "Tempat Daur Ulang Terdekat", address: "Jl. Biru No. 99, Jakarta", openHours: "10:00 - 18:00", wasteTypes: ["logam", "kertas"], coordinates: { latitude: -6.23, longitude: 106.875 } },
-    { id: 10, name: "Pusat Sampah Daur Ulang", address: "Jl. Kuning No. 66, Jakarta", openHours: "08:00 - 16:00", wasteTypes: ["plastik", "logam"], coordinates: { latitude: -6.24, longitude: 106.865 } },
-    { id: 11, name: "Pusat Daur Ulang Bekasi Timur", address: "Jl. Timur No. 55, Bekasi Timur", openHours: "08:00 - 17:00", wasteTypes: ["plastik", "kertas", "kaca"], coordinates: { latitude: -6.237, longitude: 106.987 } },
-  ];
+  // Fetch location data from API
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const locationsFromAPI: IGetLocation[] = await getlocation();
+        if (Array.isArray(locationsFromAPI)) {
+          setNearestLocations(locationsFromAPI);
+        } else {
+          setError("Data lokasi tidak valid.");
+        }
+        setLoading(false);
+      } catch (error: any) {
+        setError(error.message || "Terjadi kesalahan saat memuat data lokasi.");
+        setLoading(false);
+      }
+    };
+
+    fetchLocationData();
+  }, []);
 
   useEffect(() => {
     if (userLocation) {
-      // Filter out the user's location and sort the rest by distance
-      const sortedLocations = locations
-        .filter(
-          (location) => getDistance(userLocation.latitude, userLocation.longitude, location.coordinates.latitude, location.coordinates.longitude) > 0 // Ensure the user's location is not included
-        )
+      const sortedLocations = nearestLocations
+        .map((location) => ({
+          ...location,
+          coordinates: {
+            latitude: parseFloat(location.lat),
+            longitude: parseFloat(location.long),
+          },
+        }))
+        .filter((location) => getDistance(userLocation.latitude, userLocation.longitude, parseFloat(location.lat), parseFloat(location.long)) > 0)
         .sort((a, b) => {
-          const distanceA = getDistance(userLocation.latitude, userLocation.longitude, a.coordinates.latitude, a.coordinates.longitude);
-          const distanceB = getDistance(userLocation.latitude, userLocation.longitude, b.coordinates.latitude, b.coordinates.longitude);
+          const distanceA = getDistance(userLocation.latitude, userLocation.longitude, parseFloat(a.lat), parseFloat(a.long));
+          const distanceB = getDistance(userLocation.latitude, userLocation.longitude, parseFloat(b.lat), parseFloat(b.long));
           return distanceA - distanceB;
         });
-      setNearestLocations(sortedLocations); // Show all locations sorted by distance
+      setNearestLocations(sortedLocations);
     }
-  }, [userLocation]);
+  }, [userLocation, nearestLocations]);
 
   const handleFindNearest = () => {
     navigator.geolocation.getCurrentPosition(
@@ -87,13 +85,11 @@ const WasteLocation: React.FC = () => {
     }
   };
 
-  const handleNavigate = (location: Location) => {
-    // Generate URL for Google Maps with the coordinates of the selected location
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${location.coordinates.latitude},${location.coordinates.longitude}`;
+  const handleNavigate = (location: IGetLocation) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.long}`;
     window.open(url, "_blank");
   };
 
-  // Custom icons
   const userIcon = new Icon({
     iconUrl:
       "data:image/svg+xml;base64," +
@@ -106,7 +102,7 @@ const WasteLocation: React.FC = () => {
   });
 
   const wasteIcon = new Icon({
-    iconUrl: "https://leafletjs.com/examples/custom-icons/leaf-green.png", // Green icon for waste locations
+    iconUrl: "https://leafletjs.com/examples/custom-icons/leaf-green.png",
     shadowUrl: "https://leafletjs.com/examples/custom-icons/leaf-shadow.png",
     iconSize: [38, 95],
     shadowSize: [50, 64],
@@ -144,17 +140,17 @@ const WasteLocation: React.FC = () => {
             </Marker>
           )}
           {nearestLocations.map((location) => (
-            <Marker key={location.id} position={[location.coordinates.latitude, location.coordinates.longitude]} icon={wasteIcon}>
+            <Marker key={location.id} position={[parseFloat(location.lat), parseFloat(location.long)]} icon={wasteIcon}>
               <Popup>
                 <strong>{location.name}</strong>
                 <br />
                 {location.address}
                 <br />
-                {location.openHours}
+                {location.operating_hours}
                 <br />
-                {location.wasteTypes.join(", ")}
+                {location.status}
                 <br />
-                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2 ">
+                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
                   Arahkan ke Lokasi
                 </Button>
               </Popup>
@@ -163,25 +159,27 @@ const WasteLocation: React.FC = () => {
           <MapWithCenter />
         </MapContainer>
       </div>
-      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px] ">
+      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px]">
         <h2 className="text-xl font-bold mb-4">Daftar Lokasi Waste</h2>
-        <ul>
-          {nearestLocations.map((location) => (
-            <li key={location.id} className="mb-4 p-2 border-b border-gray-300">
-              <strong>{location.name}</strong>
-              <br />
-              {location.address}
-              <br />
-              {location.openHours}
-              <br />
-              {location.wasteTypes.join(", ")}
-              <br />
-              <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white  mt-2">
-                Arahkan ke Lokasi
-              </Button>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <ul>
+            {nearestLocations.map((location) => (
+              <li key={location.id} className="mb-4">
+                <h3 className="font-semibold">{location.name}</h3>
+                <p>{location.address}</p>
+                <p>Jam Buka: {location.operating_hours}</p>
+                <p>Status: {location.status}</p>
+                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
+                  Arahkan ke Lokasi
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
