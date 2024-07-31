@@ -27,6 +27,7 @@ const WasteLocation: React.FC = () => {
     const fetchLocationData = async () => {
       try {
         const locationsFromAPI: IGetLocation[] = await getlocation();
+        console.log(locationsFromAPI);
         if (Array.isArray(locationsFromAPI)) {
           setNearestLocations(locationsFromAPI);
         } else {
@@ -78,9 +79,9 @@ const WasteLocation: React.FC = () => {
 
   const handleViewMyLocation = () => {
     if (userLocation) {
-      const map = (window as any).map; // Access the Leaflet map instance from global window object
+      const map = (window as any).map;
       if (map) {
-        map.setView([userLocation.latitude, userLocation.longitude], 13); // Center the map at the user's location
+        map.setView([userLocation.latitude, userLocation.longitude], 13);
       }
     }
   };
@@ -146,9 +147,9 @@ const WasteLocation: React.FC = () => {
                 <br />
                 {location.address}
                 <br />
-                {location.operating_hours}
+                Jam Buka: {location.start} - {location.end}
                 <br />
-                {location.status}
+                Status: {location.status}
                 <br />
                 <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
                   Arahkan ke Lokasi
@@ -171,7 +172,9 @@ const WasteLocation: React.FC = () => {
               <li key={location.id} className="mb-4">
                 <h3 className="font-semibold">{location.name}</h3>
                 <p>{location.address}</p>
-                <p>Jam Buka: {location.operating_hours}</p>
+                <p>
+                  Jam Buka: {location.start} - {location.end}
+                </p>
                 <p>Status: {location.status}</p>
                 <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
                   Arahkan ke Lokasi

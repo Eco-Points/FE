@@ -24,7 +24,8 @@ export interface IGetLocation {
   long: string;
   lat: string;
   status: string;
-  operating_hours: string;
+  start: string;
+  end: string;
   contact_info: string;
   name: string;
   id: number;
