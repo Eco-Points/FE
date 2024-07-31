@@ -42,7 +42,7 @@ export default function DashboardUser() {
               <h3 className="text-lg font-semibold mb-2">Riwayat Penyetoran</h3>
               <p className="text-gray-700">Lihat riwayat penyetoran sampahmu.</p>
             </Link>
-            <Link to="/points/reedem" className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-100 transition-colors">
+            <Link to="/points/redeem" className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-100 transition-colors">
               <h3 className="text-lg font-semibold mb-2">Tukar Poin</h3>
               <p className="text-gray-700">Tukarkan poinmu dengan hadiah menarik.</p>
             </Link>
@@ -56,21 +56,11 @@ export default function DashboardUser() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Card>
                 <CardContent className="pt-4">
-                  <img
-                    src="https://www.panggungharjo.desa.id/wp-content/uploads/2022/10/memilah-sampah-dari-rumah-660x400.jpg"
-                    width={400}
-                    height={225}
-                    alt="Berita 1"
-                    className="rounded-lg object-cover w-full aspect-video"
-                  />
+                  <img src="https://www.panggungharjo.desa.id/wp-content/uploads/2022/10/memilah-sampah-dari-rumah-660x400.jpg" width={400} height={225} alt="Berita 1" className="rounded-lg object-cover w-full aspect-video" />
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-semibold text-green-700">Cara Mudah Memilah Sampah di Rumah</h3>
                     <p className="text-gray-700">Pelajari cara memilah sampah di rumah untuk meningkatkan partisipasi dalam pengelolaan sampah.</p>
-                    <Link
-                      to={"https://www.panggungharjo.desa.id/memilah-sampah-dari-rumah/"}
-                      target="_blank"
-                      className="inline-flex items-center gap-1 text-green-600 hover:underline"
-                    >
+                    <Link to={"https://www.panggungharjo.desa.id/memilah-sampah-dari-rumah/"} target="_blank" className="inline-flex items-center gap-1 text-green-600 hover:underline">
                       Baca Selengkapnya
                       <ArrowRightIcon className="w-4 h-4" />
                     </Link>
@@ -79,21 +69,11 @@ export default function DashboardUser() {
               </Card>
               <Card>
                 <CardContent className="pt-4">
-                  <img
-                    src="https://www.klinklin.co.id/wp-content/uploads/2022/12/414-1-1536x769.jpg"
-                    width={400}
-                    height={225}
-                    alt="Berita 2"
-                    className="rounded-lg object-cover w-full aspect-video"
-                  />
+                  <img src="https://www.klinklin.co.id/wp-content/uploads/2022/12/414-1-1536x769.jpg" width={400} height={225} alt="Berita 2" className="rounded-lg object-cover w-full aspect-video" />
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-semibold text-green-700">Tips Menjaga Kebersihan Lingkungan</h3>
                     <p className="text-gray-700">Dapatkan tips praktis untuk menjaga kebersihan lingkungan sekitar Anda.</p>
-                    <Link
-                      to={"https://www.klinklin.co.id/manfaat-dan-tips-menjaga-kebersihan-lingkungan/"}
-                      target="_blank"
-                      className="inline-flex items-center gap-1 text-green-600 hover:underline"
-                    >
+                    <Link to={"https://www.klinklin.co.id/manfaat-dan-tips-menjaga-kebersihan-lingkungan/"} target="_blank" className="inline-flex items-center gap-1 text-green-600 hover:underline">
                       Baca Selengkapnya
                       <ArrowRightIcon className="w-4 h-4" />
                     </Link>
@@ -102,21 +82,11 @@ export default function DashboardUser() {
               </Card>
               <Card>
                 <CardContent className="pt-4">
-                  <img
-                    src="https://irppapercup.com/wp-content/uploads/manfaat-daur-ulang-sampah-plastik.png"
-                    width={400}
-                    height={225}
-                    alt="Berita 3"
-                    className="rounded-lg object-cover w-full aspect-video"
-                  />
+                  <img src="https://irppapercup.com/wp-content/uploads/manfaat-daur-ulang-sampah-plastik.png" width={400} height={225} alt="Berita 3" className="rounded-lg object-cover w-full aspect-video" />
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-semibold text-green-700">Manfaat Daur Ulang Sampah untuk Lingkungan</h3>
                     <p className="text-gray-700">Pelajari manfaat daur ulang sampah untuk menjaga kelestarian lingkungan.</p>
-                    <Link
-                      to={"https://irppapercup.com/manfaat-daur-ulang-sampah-plastik/"}
-                      target="_blank"
-                      className="inline-flex items-center gap-1 text-green-600 hover:underline"
-                    >
+                    <Link to={"https://irppapercup.com/manfaat-daur-ulang-sampah-plastik/"} target="_blank" className="inline-flex items-center gap-1 text-green-600 hover:underline">
                       Baca Selengkapnya
                       <ArrowRightIcon className="w-4 h-4" />
                     </Link>
