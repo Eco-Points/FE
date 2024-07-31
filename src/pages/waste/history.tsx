@@ -61,7 +61,11 @@ export default function WasteHistory() {
                     <TableCell>{history.type}</TableCell>
                     <TableCell>{history.quantity}</TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className="text-yellow-600 bg-yellow-100 border-yellow-600">
+                      <Badge
+                        variant={
+                          history.status.toLowerCase() === "pending" ? "secondary" : history.status.toLowerCase() === "verified" ? "default" : "destructive"
+                        }
+                      >
                         {history.status}
                       </Badge>
                     </TableCell>
