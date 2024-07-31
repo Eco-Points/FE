@@ -1,6 +1,7 @@
 import { useToken } from "@/utils/contexts/token";
 import Layout from "../../components/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useToken();
@@ -43,12 +44,12 @@ const Profile = () => {
             <div className="text-base text-gray-900">{user.address}</div>
           </div>
           <div className="flex justify-end">
-            <a
-              href="#"
+            <Link
+              to="/dashboard"
               className="inline-flex items-center justify-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
               Kembali ke Dashboard
-            </a>
+            </Link>
           </div>
         </div>
       </div>
