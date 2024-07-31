@@ -75,7 +75,7 @@ export default function Router() {
       element: <VerifyWasteDepositPage />,
     },
     {
-      path: "/admin/edit-reward",
+      path: "/admin/edit-reward/:reward_id",
       element: <EditRewardPage />,
     },
     {

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { getRewards } from "@/utils/apis/rewards";
+import { deleteReward, getRewards } from "@/utils/apis/rewards";
 import { IReward } from "@/utils/types/rewards";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +32,16 @@ export default function ManageRewards() {
     try {
       const response = await getRewards();
       setRewards(response.data || []);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  }
+
+  async function handleDeleteReward(reward_id: number) {
+    try {
+      const response = await deleteReward(reward_id);
+      fetchRewards();
+      toast.success(response.message);
     } catch (error) {
       toast.error((error as Error).message);
     }
@@ -83,11 +93,13 @@ export default function ManageRewards() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <FilePenIcon className="h-4 w-4 mr-2" />
-                          <Link to={`/admin/edit-reward/${reward.reward_id}`}>Edit</Link>
+                        <DropdownMenuItem asChild>
+                          <Link to={`/admin/edit-reward/${reward.reward_id}`} className="flex">
+                            <FilePenIcon className="h-4 w-4 mr-2" />
+                            Edit
+                          </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDeleteReward(reward.reward_id)}>
                           <TrashIcon className="h-4 w-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
