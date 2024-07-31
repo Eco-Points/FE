@@ -57,3 +57,21 @@ export const getRewards = async () => {
     throw Error(message);
   }
 };
+
+export const addReward = async (body: AddRewardSchema) => {
+  try {
+    const formData = new FormData();
+    let key: keyof typeof body;
+
+    for (key in body) {
+      if (checkProperty(body[key])) {
+        formData.append(key, valueFormatData(body[key]));
+      }
+    }
+    const response = await axiosWithConfig.post(`/reward`, formData);
+    return response.data as IResponse<IReward>;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};
