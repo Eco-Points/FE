@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { CustomFormField } from "@/components/custom-formfield";
 
 const EditProfile = () => {
-  const { user, changeToken } = useToken();
+  const { user } = useToken();
   const navigate = useNavigate();
 
   const methods = useForm<EditProfileSchema>({
@@ -40,10 +40,10 @@ const EditProfile = () => {
 
   async function onSubmit(data: EditProfileSchema) {
     try {
+      console.log("Data before submission: ", data);
       const response = await editProfile(data);
       toast.success(response.message);
-      changeToken();
-      navigate("/"); // Pastikan navigasi ini dipanggil setelah perubahan profil berhasil
+      navigate("/profile");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
@@ -89,7 +89,7 @@ const EditProfile = () => {
                   {(field) => (
                     <div className="flex items-center gap-4">
                       <Avatar className="h-16 w-16">
-                        <AvatarImage src={user?.image_url || "/placeholder-user.jpg"} />
+                        <AvatarImage src={user?.profile_picture || "/placeholder-user.jpg"} />
                         <AvatarFallback>{user?.fullname?.[0] ?? "?"}</AvatarFallback>
                       </Avatar>
                       <Input

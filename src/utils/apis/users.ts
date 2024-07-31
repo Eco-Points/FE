@@ -24,6 +24,8 @@ export const editProfile = async (body: EditProfileSchema): Promise<EditProfileT
         formData.append(key, valueFormatData(body[key]));
       }
     }
+    console.log("FormData: ", formData); // Add this line
+
     const response = await axiosWithConfig.put<EditProfileType>("/users", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
