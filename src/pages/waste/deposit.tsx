@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { toast } from "sonner";
 
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
@@ -13,11 +13,14 @@ import Layout from "@/components/layout";
 
 import { depositSchema, DepositSchema } from "@/utils/types/admin-waste-deposit";
 import { createDeposit } from "@/utils/apis/admin-waste-deposit";
-import { LOCATION_OPTIONS, TRASH_OPTIONS } from "@/utils/const";
+import { IGetLocation } from "@/utils/types/waste-location";
+import { getlocation } from "@/utils/apis/waste-location";
+import { TRASH_OPTIONS } from "@/utils/const";
 
 export default function WasteDeposit() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [data, setData] = useState<IGetLocation[]>([]);
 
   const form = useForm<DepositSchema>({
     resolver: zodResolver(depositSchema),
@@ -28,6 +31,19 @@ export default function WasteDeposit() {
       date_time: new Date(),
     },
   });
+
+  useEffect(() => {
+    fetchLocation();
+  }, []);
+
+  async function fetchLocation() {
+    try {
+      const response = await getlocation();
+      setData(response || [])
+    } catch (error) {
+      toast.error("Gagal mengambil data lokasi.");
+    }
+  }
 
   const onSubmit = async (data: DepositSchema) => {
     setIsSubmitting(true);
@@ -83,12 +99,12 @@ export default function WasteDeposit() {
                   <>
                     <Select value={field.value ? field.value.toString() : ""} onValueChange={(value) => field.onChange(Number(value))} disabled={isSubmitting}>
                       <SelectTrigger>
-                        {field.value ? LOCATION_OPTIONS.find((option) => option.value === field.value)?.label : "Pilih Lokasi Penyetoran"}
+                        {field.value ? data.find((option) => option.id === field.value)?.address || "Lokasi Tidak Diketahui" : "Pilih Lokasi Penyetoran"}
                       </SelectTrigger>
-                      <SelectContent>
-                        {LOCATION_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value.toString()}>
-                            {option.label}
+                      <SelectContent style={{ maxHeight: "200px", overflowY: "auto" }}>
+                        {data.map((option) => (
+                          <SelectItem key={option.id} value={option.id.toString()}>
+                            {option.address}
                           </SelectItem>
                         ))}
                       </SelectContent>

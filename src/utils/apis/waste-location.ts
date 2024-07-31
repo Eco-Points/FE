@@ -1,4 +1,4 @@
-import { LocationFormData } from "../types/waste-location";
+import { IGetLocation, LocationFormData } from "../types/waste-location";
 import axiosWithConfig from "./axios-with-config";
 
 export const addLocation = async (data: LocationFormData) => {
@@ -18,7 +18,7 @@ export const addLocation = async (data: LocationFormData) => {
 export const getlocation = async () => {
   try {
     const response = await axiosWithConfig.get("/location?limit=30");
-    return response.data.data;
+    return response.data.data as IGetLocation[];
   } catch (error: any) {
     const { message } = error.response.data;
     throw Error(message);
