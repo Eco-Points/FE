@@ -13,19 +13,6 @@ export const getUsers = async (): Promise<getUsersType[]> => {
   }
 };
 
-export const editUserStatus = async (userId: number, status: string) => {
-  try {
-    const response = await axiosWithConfig.put("/dashboard/users", {
-      user_id: userId,
-      status: status,
-    });
-    return response.data;
-  } catch (error: any) {
-    const { message } = error.response.data;
-    throw Error(message);
-  }
-};
-
 export const getDashboard = async (): Promise<dashboardType> => {
   try {
     const response = await axiosWithConfig.get("/dashboard");
@@ -36,6 +23,21 @@ export const getDashboard = async (): Promise<dashboardType> => {
     throw new Error(message);
   }
 };
+
+export const editUserStatus = async (userId: number, status: string) => {
+  try {
+    const response = await axiosWithConfig.put(`/dashboard/users/${userId}`, {
+      user_id: userId,
+      status: status,
+    });
+    console.log("API response status update:", response.data);
+    return response.data;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};
+
 export const getUserById = async (userId: number): Promise<ProfileType> => {
   try {
     const response = await axiosWithConfig.get(`/dashboard/users/${userId}`);

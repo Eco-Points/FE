@@ -17,10 +17,16 @@ export default function EditUser() {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      const userId = parseInt(id!);
+      console.log("User ID:", userId);
+      if (isNaN(userId)) {
+        toast.error("Invalid user ID");
+        return;
+      }
       try {
-        const data = await getUserById(parseInt(id!));
+        const data = await getUserById(userId);
         setUserData(data);
-        setStatus(data.status); // Setel status awal dari data pengguna
+        setStatus(data.status);
       } catch (error: any) {
         toast.error(error.message);
       }
@@ -30,8 +36,13 @@ export default function EditUser() {
   }, [id]);
 
   const handleSave = async () => {
+    const userId = parseInt(id!);
+    if (isNaN(userId)) {
+      toast.error("Invalid user ID");
+      return;
+    }
     try {
-      await editUserStatus(parseInt(id!), status);
+      await editUserStatus(userId, status);
       toast.success("Status pengguna berhasil diperbarui!");
       navigate("/admin/manage-users");
     } catch (error: any) {

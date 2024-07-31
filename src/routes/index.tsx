@@ -63,7 +63,7 @@ export default function Router() {
       element: <ManageUserPage />,
     },
     {
-      path: "/admin/edit-user/:user_id",
+      path: "/admin/edit-user/:id",
       element: <EditUserPage />,
     },
     {
