@@ -1,9 +1,11 @@
+import { dashboardType } from "../types/admin";
 import { ProfileType, getUsersType } from "../types/users";
 import axiosWithConfig from "./axios-with-config";
 
 export const getUsers = async (): Promise<getUsersType[]> => {
   try {
-    const response = await axiosWithConfig.get("/information_users");
+    const response = await axiosWithConfig.get("/dashboard/users");
+    console.log("API response:", response.data);
     return response.data.data;
   } catch (error: any) {
     const { message } = error.response.data;
@@ -13,7 +15,7 @@ export const getUsers = async (): Promise<getUsersType[]> => {
 
 export const editUserStatus = async (userId: number, status: string) => {
   try {
-    const response = await axiosWithConfig.put("/information_users", {
+    const response = await axiosWithConfig.put("/dashboard/users", {
       user_id: userId,
       status: status,
     });
@@ -24,20 +26,19 @@ export const editUserStatus = async (userId: number, status: string) => {
   }
 };
 
-export const getDashboard = async () => {
+export const getDashboard = async (): Promise<dashboardType> => {
   try {
     const response = await axiosWithConfig.get("/dashboard");
-    console.log("API response:", response.data);
+    console.log("API response dashboard:", response.data.data);
     return response.data.data;
   } catch (error: any) {
     const { message } = error.response.data;
-    throw Error(message);
+    throw new Error(message);
   }
 };
-
 export const getUserById = async (userId: number): Promise<ProfileType> => {
   try {
-    const response = await axiosWithConfig.get(`/information_users/${userId}`);
+    const response = await axiosWithConfig.get(`/dashboard/users/${userId}`);
     console.log(response.data.data);
     return response.data.data;
   } catch (error: any) {
