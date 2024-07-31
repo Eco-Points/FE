@@ -24,6 +24,7 @@ import DashboardUser from "@/pages/users/dashboard";
 import AboutUsPage from "@/pages/about";
 import NotFoundPage from "@/pages/not-found";
 import SuspendPage from "@/pages/suspend";
+import AddLocationPage from "@/pages/admin/add-location";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -99,6 +100,10 @@ export default function Router() {
     {
       path: "/points/redeem",
       element: <RedeemPointsPage />,
+    },
+    {
+      path: "/admin/add-location",
+      element: <AddLocationPage />,
     },
     {
       path: "/points/detail-redeem/:reward_id",

@@ -82,6 +82,14 @@ export default function Header() {
                   Lokasi
                 </Link>
               </DropdownMenuItem>
+              {user?.is_admin && (
+                <DropdownMenuItem asChild>
+                  <Link to={"/admin/add-location"} className="flex items-center gap-2">
+                    <MapPinIcon className="h-4 w-4" />
+                    Tambah Lokasi
+                  </Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => handleLogout()}>
                 <LogOutIcon className="h-4 w-4" />
