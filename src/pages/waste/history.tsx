@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowLeftIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
@@ -33,10 +34,10 @@ export default function WasteHistory() {
             <div className="">
               <h1 className="text-2xl font-bold text-green-700">Riwayat Penyetoran Sampah</h1>
             </div>
-            <a href="#" className="inline-flex items-center gap-2 text-green-700 hover:underline hover:text-green-500">
+            <Link to="/dashboard" className="inline-flex items-center gap-2 text-green-700 hover:underline hover:text-green-500">
               <ArrowLeftIcon className="w-4 h-4" />
               Kembali
-            </a>
+            </Link>
           </div>
           <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
             <Table className="min-w-full">
