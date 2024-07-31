@@ -66,7 +66,7 @@ export default function ManageUser() {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{user.fullname}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.register_datetime || "N/A"}</TableCell>
+                  <TableCell>{user.registered_date || "N/A"}</TableCell>
                   <TableCell>
                     <Badge variant={user.status === "active" ? "secondary" : user.status === "suspended" ? "outline" : "default"}>{user.status || "Unknown"}</Badge>
                   </TableCell>

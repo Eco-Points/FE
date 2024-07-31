@@ -5,7 +5,7 @@ import axiosWithConfig from "./axios-with-config";
 export const getUsers = async (): Promise<getUsersType[]> => {
   try {
     const response = await axiosWithConfig.get("/dashboard/users");
-    console.log("API response:", response.data);
+    console.log("API response data:", response.data.data);
     return response.data.data;
   } catch (error: any) {
     const { message } = error.response.data;
