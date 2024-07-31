@@ -27,7 +27,7 @@ export default function VerifyWasteDeposit() {
       const response = await getDepositAdmin();
       setDeposits(response.data || []);
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
     }
   }
 

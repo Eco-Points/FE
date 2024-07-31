@@ -1,5 +1,7 @@
+import { checkProperty, valueFormatData } from "../function";
+import { IResponse } from "../types/api";
 import axiosWithConfig from "./axios-with-config";
-import { IReward, detailRewardsType } from "@/utils/types/rewards";
+import { AddRewardSchema, IReward, detailRewardsType } from "@/utils/types/rewards";
 
 interface RewardsResponse {
   data: IReward[];
@@ -44,5 +46,15 @@ export const exchangeRewards = async (reward_id: number) => {
   } catch (error) {
     console.error("Error fetching rewards:", error);
     throw error;
+  }
+};
+
+export const getRewards = async () => {
+  try {
+    const response = await axiosWithConfig.get(`/reward`);
+    return response.data as IResponse<IReward[]>;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
   }
 };
