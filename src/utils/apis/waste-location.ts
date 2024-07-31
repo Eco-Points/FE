@@ -12,8 +12,8 @@ export const addLocation = async (data: FormData) => {
 
 export const getlocation = async () => {
   try {
-    const response = await axiosWithConfig.get("/location?limit=10");
-    return response.data;
+    const response = await axiosWithConfig.get("/location?limit=30");
+    return response.data.data;
   } catch (error: any) {
     const { message } = error.response.data;
     throw Error(message);
