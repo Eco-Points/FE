@@ -25,7 +25,7 @@ const EditProfile = () => {
       email: user?.email ?? "",
       phone: user?.phone ?? "",
       address: user?.address ?? "",
-      profile_picture: new File([], ""),
+      image_url: new File([], ""),
     },
   });
 
@@ -56,7 +56,7 @@ const EditProfile = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      setValue("profile_picture", files[0]);
+      setValue("image_url", files[0]);
     }
   };
 
@@ -85,11 +85,11 @@ const EditProfile = () => {
                     {(field) => <Textarea {...field} placeholder="Masukkan alamat" />}
                   </CustomFormField>
                 </div>
-                <CustomFormField control={methods.control} name="profile_picture" label="Profile Picture" description="Upload your profile picture">
+                <CustomFormField control={methods.control} name="image_url" label="Profile Picture" description="Upload your profile picture">
                   {(field) => (
                     <div className="flex items-center gap-4">
                       <Avatar className="h-16 w-16">
-                        <AvatarImage src={user?.profile_picture || "/placeholder-user.jpg"} />
+                        <AvatarImage src={user?.image_url || "/placeholder-user.jpg"} />
                         <AvatarFallback>{user?.fullname?.[0] ?? "?"}</AvatarFallback>
                       </Avatar>
                       <Input

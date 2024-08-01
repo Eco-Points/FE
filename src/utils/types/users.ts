@@ -7,7 +7,7 @@ export const editProfileSchema = z.object({
   phone: z.string().min(1, { message: "Phone number is Required" }),
   address: z.string().min(1, { message: "Addres is Invalid" }),
 
-  profile_picture: z
+  image_url: z
     .instanceof(File)
     .refine((file) => !file || file.size <= MAX_UPLOAD_SIZE, `Max Image size is ${MAX_MB} MB`)
     .refine((file) => !file || file.type === "" || ACCEPTED_IMAGE_TYPES.includes(file.type), "Only .jpg, .jpeg, and .png format are supported"),
@@ -21,7 +21,7 @@ export interface EditProfileType {
   phone_number: number;
   address: string;
   message?: string;
-  profile_picture: FileList;
+  image_url: FileList;
 }
 
 export interface ProfileType {
@@ -34,7 +34,6 @@ export interface ProfileType {
   is_admin: boolean;
   point: number;
   status: string;
-  profile_picture: string;
 }
 
 export interface getUsersType {
