@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
 import { Link } from "react-router-dom";
-import { getUsers } from "@/utils/apis/admin-user";
+import { deleteUser, getUsers } from "@/utils/apis/admin-user";
 import { getUsersType } from "@/utils/types/users";
 import { toast } from "sonner";
 
@@ -34,6 +34,16 @@ export default function ManageUser() {
 
     fetchUsers();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await deleteUser(id);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      toast.success(response.message);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -82,7 +92,7 @@ export default function ManageUser() {
                           <FilePenIcon className="h-4 w-4 mr-2" />
                           <Link to={`/admin/edit-user/${user.id}`}>Edit</Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDelete(user.id)}>
                           <TrashIcon className="h-4 w-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
