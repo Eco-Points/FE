@@ -52,7 +52,7 @@ export default function AboutUs() {
 
               <div className="space-y-4 text-center">
                 <Avatar className="mx-auto w-24 h-24">
-                  <AvatarImage src="/emily-davis.jpg" alt="Farah Raihanunnisa" className="w-24 h-24" />
+                  <AvatarImage src="/fara.png" alt="Farah Raihanunnisa" className="w-24 h-24" />
                   <AvatarFallback className="w-24 h-24">ED</AvatarFallback>
                 </Avatar>
                 <div>
