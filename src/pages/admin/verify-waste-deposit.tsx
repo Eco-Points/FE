@@ -12,6 +12,7 @@ import Layout from "@/components/layout";
 
 import { getDepositAdmin, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
+import { getExcelAdmin } from "@/utils/apis/excel";
 
 export default function VerifyWasteDeposit() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -70,6 +71,20 @@ export default function VerifyWasteDeposit() {
     }
   });
 
+  const handleDownload = async () => {
+    try {
+      const response = await getExcelAdmin();
+      const { tanggal, link } = response.data;
+      const a = document.createElement("a");
+      a.href = link;
+      a.download = `laporan-penyetoran-sampah-${tanggal}.xlsx`;
+      a.click();
+      toast.success("Laporan berhasil diunduh.");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
+
   return (
     <Layout>
       <div className="bg-white dark:bg-gray-950 text-gray-950 dark:text-white p-6 mx-4 md:mx-6 md:py-12">
@@ -77,25 +92,30 @@ export default function VerifyWasteDeposit() {
           <h1 className="text-2xl font-bold text-green-900" data-testid="header-title">
             Verifikasi Penyetoran Sampah
           </h1>
-          <div className="flex gap-2 max-w-md">
-            <Input
-              placeholder="Cari penyetoran..."
-              value={searchTerm}
-              onChange={handleSearch}
-              className="bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white"
-              data-testid="input-search"
-            />
-            <Select value={filterStatus} onValueChange={handleFilterStatus} data-testid="select-status">
-              <SelectTrigger>
-                <SelectValue placeholder="Filter status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="verified">Terverifikasi</SelectItem>
-                <SelectItem value="rejected">Ditolak</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex justify-between">
+            <div className="flex gap-2 max-w-md">
+              <Input
+                placeholder="Cari penyetoran..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white"
+                data-testid="input-search"
+              />
+              <Select value={filterStatus} onValueChange={handleFilterStatus} data-testid="select-status">
+                <SelectTrigger>
+                  <SelectValue placeholder="Filter status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="verified">Terverifikasi</SelectItem>
+                  <SelectItem value="rejected">Ditolak</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button variant={"outline"} onClick={handleDownload} data-testid="btn-download">
+              Download Excel
+            </Button>
           </div>
         </div>
         <div className="overflow-x-auto">

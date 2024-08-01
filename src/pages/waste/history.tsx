@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { ArrowLeftIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
 
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
 import { getDeposit } from "@/utils/apis/admin-waste-deposit";
+import { getExcelUser } from "@/utils/apis/excel";
 
 export default function WasteHistory() {
   const [wasteHistory, setWasteHistory] = useState<IGetDeposit[]>([]);
@@ -26,6 +26,20 @@ export default function WasteHistory() {
     }
   }
 
+  const handleDownload = async () => {
+    try {
+      const response = await getExcelUser();
+      const { tanggal, link } = response.data;
+      const a = document.createElement("a");
+      a.href = link;
+      a.download = `laporan-penyetoran-sampah-${tanggal}.xlsx`;
+      a.click();
+      toast.success("Laporan berhasil diunduh.");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
+
   return (
     <Layout>
       <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-8" data-testid="waste-history-container">
@@ -36,14 +50,9 @@ export default function WasteHistory() {
                 Riwayat Penyetoran Sampah
               </h1>
             </div>
-            <Link
-              to="/dashboard"
-              className="inline-flex items-center gap-2 text-green-700 hover:underline hover:text-green-500"
-              data-testid="back-to-dashboard"
-            >
-              <ArrowLeftIcon className="w-4 h-4" />
-              Kembali
-            </Link>
+            <Button variant={"outline"} onClick={handleDownload} data-testid="btn-submit">
+              Download Excel
+            </Button>
           </div>
           <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm" data-testid="waste-history-table-container">
             <Table className="min-w-full" data-testid="waste-history-table">
