@@ -69,10 +69,12 @@ export default function EditReward() {
         <div className="bg-background rounded-lg shadow-lg p-6">
           <div className="space-y-4">
             <div>
-              <h1 className="text-2xl font-bold text-green-700">Edit Hadiah</h1>
+              <h1 className="text-2xl font-bold text-green-700" data-testid="page-title">
+                Edit Hadiah
+              </h1>
             </div>
             <Form {...form}>
-              <form data-testid="form-add-rewards" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form data-testid="form-edit-rewards" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <CustomFormField control={form.control} name="name" label="Nama Hadiah">
                   {(field) => (
                     <Input
@@ -122,6 +124,7 @@ export default function EditReward() {
                 <CustomFormField control={form.control} name="image" label="Gambar Hadiah">
                   {(field) => (
                     <Input
+                      data-testid="button-back"
                       type="file"
                       accept="image/png, image/jpeg, image/jpg"
                       multiple={false}
@@ -133,7 +136,9 @@ export default function EditReward() {
                 </CustomFormField>
                 <div className="w-full flex gap-4 justify-end">
                   <Button variant={"secondary"} className="hover:bg-slate-300">
-                    <Link to="/admin/manage-rewards">Kembali</Link>
+                    <Link to="/admin/manage-rewards" data-testid="button-back">
+                      Kembali
+                    </Link>
                   </Button>
                   <Button
                     data-testid="btn-submit"

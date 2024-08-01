@@ -51,8 +51,10 @@ export default function ManageRewards() {
     <Layout>
       <div className="bg-white p-6 md:py-12 mx-4 md:mx-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-green-700">Kelola Hadiah</h1>
-          <Button size="sm" className="bg-green-600" asChild>
+          <h1 className="text-2xl font-bold text-green-700" data-testid="header-title">
+            Kelola Hadiah
+          </h1>
+          <Button size="sm" className="bg-green-600" asChild data-testid="btn-add-reward">
             <Link to="/admin/add-reward">Tambah Hadiah</Link>
           </Button>
         </div>
@@ -64,6 +66,7 @@ export default function ManageRewards() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="bg-gray-100 border-none focus:ring-0 focus:border-none"
+              data-testid="input-search"
             />
           </div>
         </div>
@@ -80,26 +83,28 @@ export default function ManageRewards() {
             </TableHeader>
             <TableBody>
               {filteredRewards.map((reward) => (
-                <TableRow key={reward.reward_id}>
-                  <TableCell className="font-medium">{reward.name}</TableCell>
-                  <TableCell>{reward.description}</TableCell>
-                  <TableCell>{reward.point_required}</TableCell>
-                  <TableCell>{reward.stock}</TableCell>
+                <TableRow key={reward.reward_id} data-testid={`reward-row-${reward.reward_id}`}>
+                  <TableCell className="font-medium" data-testid={`reward-name-${reward.reward_id}`}>
+                    {reward.name}
+                  </TableCell>
+                  <TableCell data-testid={`reward-description-${reward.reward_id}`}>{reward.description}</TableCell>
+                  <TableCell data-testid={`reward-points-${reward.reward_id}`}>{reward.point_required}</TableCell>
+                  <TableCell data-testid={`reward-stock-${reward.reward_id}`}>{reward.stock}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full">
+                        <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full" data-testid={`btn-menu-${reward.reward_id}`}>
                           <MoveVerticalIcon className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link to={`/admin/edit-reward/${reward.reward_id}`} className="flex">
+                          <Link to={`/admin/edit-reward/${reward.reward_id}`} className="flex" data-testid={`btn-edit-${reward.reward_id}`}>
                             <FilePenIcon className="h-4 w-4 mr-2" />
                             Edit
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDeleteReward(reward.reward_id)}>
+                        <DropdownMenuItem onClick={() => handleDeleteReward(reward.reward_id)} data-testid={`btn-delete-${reward.reward_id}`}>
                           <TrashIcon className="h-4 w-4 mr-2" />
                           Delete
                         </DropdownMenuItem>

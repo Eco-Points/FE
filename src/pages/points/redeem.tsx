@@ -46,30 +46,40 @@ const RedeemPoin = () => {
       <div className="min-h-screen my-4 md:my-8 mx-2 md:mx-auto flex flex-col items-center justify-center">
         <div className="bg-white rounded-lg max-w-6xl w-full">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-green-700">Tukar Poin</h1>
-            <Link to="/users/dashboard" className="text-green-600 hover:underline">
+            <h1 className="text-3xl font-bold text-green-700" data-testid="page-title">
+              Tukar Poin
+            </h1>
+            <Link to="/users/dashboard" className="text-green-600 hover:underline" data-testid="back-link">
               Kembali
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6" data-testid="rewards-grid">
             {rewards.map((reward) => (
-              <Link to={`/points/detail-redeem/${reward.reward_id}`} key={reward.reward_id}>
-                <div className="bg-white rounded-lg p-4 flex flex-col shadow-md">
-                  <img src={reward.image} alt={reward.name} className="mb-4 w-full" />
-                  <h3 className="text-lg font-bold text-start text-green-700 mb-2">{reward.name}</h3>
-                  <p className="text-gray-700 mb-4">{reward.description}</p>
-                  <div className="flex justify-between items-center w-full mb-4">
-                    <div className="text-green-700 font-bold">{reward.point_required} Poin</div>
-                    <Button className="bg-green-600 text-white hover:bg-green-500">Tukar</Button>
+              <Link to={`/points/detail-redeem/${reward.reward_id}`} key={reward.reward_id} data-testid={`reward-link-${reward.reward_id}`}>
+                <div className="bg-white rounded-lg p-4 flex flex-col shadow-md" data-testid={`reward-card-${reward.reward_id}`}>
+                  <img src={reward.image} alt={reward.name} className="mb-4 w-full" data-testid={`reward-image-${reward.reward_id}`} />
+                  <h3 className="text-lg font-bold text-start text-green-700 mb-2" data-testid={`reward-name-${reward.reward_id}`}>
+                    {reward.name}
+                  </h3>
+                  <p className="text-gray-700 mb-4" data-testid={`reward-description-${reward.reward_id}`}>
+                    {reward.description}
+                  </p>
+                  <div className="flex justify-between items-center w-full mb-4" data-testid={`reward-points-${reward.reward_id}`}>
+                    <div className="text-green-700 font-bold" data-testid={`reward-points-text-${reward.reward_id}`}>
+                      {reward.point_required} Poin
+                    </div>
+                    <Button className="bg-green-600 text-white hover:bg-green-500" data-testid={`redeem-button-${reward.reward_id}`}>
+                      Tukar
+                    </Button>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-          {loading && <div>Loading...</div>}
-          {error && <div>Error: {error}</div>}
+          {loading && <div data-testid="loading">Loading...</div>}
+          {error && <div data-testid="error">Error: {error}</div>}
           {hasMore && !loading && (
-            <Button className="mt-4 bg-green-600 text-white hover:bg-green-500" onClick={loadMore}>
+            <Button className="mt-4 bg-green-600 text-white hover:bg-green-500" onClick={loadMore} data-testid="load-more-button">
               Load More
             </Button>
           )}

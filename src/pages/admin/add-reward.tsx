@@ -39,12 +39,16 @@ export default function AddReward() {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
+      <div className="container mx-auto px-4 py-8 max-w-2xl" data-testid="add-reward-page">
         <div className="bg-background rounded-lg shadow-lg p-6">
           <div className="space-y-4">
             <div>
-              <h1 className="text-2xl font-bold text-green-700">Tambah Hadiah Baru</h1>
-              <p className="text-muted-foreground">Tambahkan hadiah baru yang bisa ditukarkan dengan poin oleh pengguna.</p>
+              <h1 className="text-2xl font-bold text-green-700" data-testid="title">
+                Tambah Hadiah Baru
+              </h1>
+              <p className="text-muted-foreground" data-testid="description">
+                Tambahkan hadiah baru yang bisa ditukarkan dengan poin oleh pengguna.
+              </p>
             </div>
             <Form {...form}>
               <form data-testid="form-add-rewards" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -97,6 +101,7 @@ export default function AddReward() {
                 <CustomFormField control={form.control} name="image" label="Gambar Hadiah">
                   {(field) => (
                     <Input
+                      data-testid="input-image"
                       type="file"
                       accept="image/png, image/jpeg, image/jpg"
                       multiple={false}
@@ -107,8 +112,10 @@ export default function AddReward() {
                   )}
                 </CustomFormField>
                 <div className="w-full flex gap-4 justify-end">
-                  <Button variant={"secondary"} className="hover:bg-slate-300">
-                    <Link to="/admin/manage-rewards">Kembali</Link>
+                  <Button variant="secondary" className="hover:bg-slate-300" data-testid="button-back">
+                    <Link to="/admin/manage-rewards" data-testid="link-back">
+                      Kembali
+                    </Link>
                   </Button>
                   <Button
                     data-testid="btn-submit"
