@@ -1,4 +1,4 @@
-import { dashboardType } from "../types/admin";
+import { dashboardType, deleteUserType } from "../types/admin";
 import { ProfileType, getUsersType } from "../types/users";
 import axiosWithConfig from "./axios-with-config";
 
@@ -43,6 +43,17 @@ export const getUserById = async (userId: number): Promise<ProfileType> => {
     const response = await axiosWithConfig.get(`/dashboard/users/${userId}`);
     console.log(response.data.data);
     return response.data.data;
+  } catch (error: any) {
+    const { message } = error.response.data;
+    throw Error(message);
+  }
+};
+
+export const deleteUser = async (userId: number): Promise<deleteUserType> => {
+  try {
+    const response = await axiosWithConfig.delete(`/dashboard/users/${userId}`);
+    console.log(response.data);
+    return response.data;
   } catch (error: any) {
     const { message } = error.response.data;
     throw Error(message);
