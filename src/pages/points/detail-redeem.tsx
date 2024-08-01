@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
-import { detailRewards } from "@/utils/apis/rewards";
-import { exchangeRewards } from "@/utils/apis/rewards";
+import { detailRewards, exchangeRewards } from "@/utils/apis/rewards";
 import { detailRewardsType } from "@/utils/types/rewards";
 
 export default function DetailRedeem() {
@@ -13,7 +13,7 @@ export default function DetailRedeem() {
   const [error, setError] = useState<string | null>(null);
   const [redeeming, setRedeeming] = useState<boolean>(false); // State untuk proses penukaran
   const [redeemError, setRedeemError] = useState<string | null>(null); // State untuk error penukaran
-  const [redeemed, setRedeemed] = useState<boolean>(false); // State untuk melacak status penukaran berhasil
+  const [redeemed, setRedeemed] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchReward = async () => {
@@ -48,8 +48,7 @@ export default function DetailRedeem() {
     try {
       const response = await exchangeRewards(parseInt(reward_id, 10));
       console.log("Redeem success:", response);
-      setRedeemed(true); // Mengatur state redeemed menjadi true jika penukaran berhasil
-      // Tambahkan logika tambahan jika perlu, seperti menampilkan pesan sukses atau memperbarui state
+      setRedeemed(true);
     } catch (error: any) {
       setRedeemError(error.message);
     } finally {
@@ -76,6 +75,7 @@ export default function DetailRedeem() {
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <span className="text-2xl font-bold">{reward.point_required} Points</span>
+                <span className="text-lg text-muted-foreground">Stock: {reward.stock}</span>
               </div>
             </div>
             <div className="space-y-4">
@@ -83,12 +83,7 @@ export default function DetailRedeem() {
                 Upgrade your listening experience with our state-of-the-art wireless headphones. Featuring advanced noise-cancelling technology, premium sound quality, and a sleek, comfortable design, these headphones will transport you to
                 a new level of audio bliss.
               </p>
-              <Button
-                size="lg"
-                className="w-full bg-green-700"
-                onClick={handleRedeem}
-                disabled={redeeming || redeemed} // Disabled jika sedang proses penukaran atau sudah berhasil
-              >
+              <Button size="lg" className="w-full bg-green-700" onClick={handleRedeem} disabled={redeeming || redeemed || reward.stock === 0}>
                 {redeeming ? "Redeeming..." : redeemed ? "Sudah Ditukar" : "Redeem Points"} {/* Teks tombol */}
               </Button>
               {redeemError && <p className="text-red-600 mt-2">{redeemError}</p>} {/* Tampilkan error jika ada */}

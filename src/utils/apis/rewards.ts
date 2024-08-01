@@ -19,7 +19,7 @@ interface RewardsResponse {
 export const getAllRewards = async (page: number, itemsPerPage: number = 4): Promise<RewardsResponse> => {
   try {
     const response = await axiosWithConfig.get(`/reward?page=${page}&itemsPerPage=${itemsPerPage}`);
-    console.log("Rewards response:", response.data);
+    console.log("Rewards response manggil all rewards:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching rewards:", error);
@@ -31,7 +31,7 @@ export const detailRewards = async (reward_id: number): Promise<detailRewardsTyp
   try {
     const response = await axiosWithConfig.get(`/reward/${reward_id}`);
     console.log("Rewards response:", response.data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching rewards:", error);
     throw error;
@@ -40,7 +40,7 @@ export const detailRewards = async (reward_id: number): Promise<detailRewardsTyp
 
 export const exchangeRewards = async (reward_id: number) => {
   try {
-    const response = await axiosWithConfig.post(`/exchange/${reward_id}`);
+    const response = await axiosWithConfig.post(`/exchange/`, { reward_id });
     console.log("Rewards response:", response.data);
     return response.data;
   } catch (error) {
