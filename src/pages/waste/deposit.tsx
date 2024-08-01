@@ -39,7 +39,7 @@ export default function WasteDeposit() {
   async function fetchLocation() {
     try {
       const response = await getlocation();
-      setData(response || [])
+      setData(response || []);
     } catch (error) {
       toast.error("Gagal mengambil data lokasi.");
     }
@@ -60,17 +60,24 @@ export default function WasteDeposit() {
 
   return (
     <Layout>
-      <div className="w-full max-w-md mx-auto py-8 border shadow-md my-4 md:my-8 px-2 md:px-8 rounded-lg">
+      <div className="w-full max-w-md mx-auto py-8 border shadow-md my-4 md:my-8 px-2 md:px-8 rounded-lg" data-testid="waste-deposit-form-container">
         <div className="text-start mb-6">
-          <h1 className="text-2xl font-bold text-green-700">Setor Sampah</h1>
+          <h1 className="text-2xl font-bold text-green-700" data-testid="form-title">
+            Setor Sampah
+          </h1>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" data-testid="waste-deposit-form">
             <div>
               <CustomFormField control={form.control} name="trash_id" label="Jenis Sampah">
                 {(field) => (
                   <>
-                    <Select value={field.value ? field.value.toString() : ""} onValueChange={(value) => field.onChange(Number(value))} disabled={isSubmitting}>
+                    <Select
+                      value={field.value ? field.value.toString() : ""}
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      disabled={isSubmitting}
+                      data-testid="select-trash-type"
+                    >
                       <SelectTrigger>{field.value ? TRASH_OPTIONS.find((option) => option.value === field.value)?.label : "Pilih Jenis Sampah"}</SelectTrigger>
                       <SelectContent>
                         {TRASH_OPTIONS.map((option) => (
@@ -88,7 +95,14 @@ export default function WasteDeposit() {
               <CustomFormField control={form.control} name="quantity" label="Jumlah Satuan">
                 {(field) => (
                   <>
-                    <Input {...field} type="number" placeholder="Masukkan jumlah" disabled={isSubmitting} value={field.value ? field.value.toString() : ""} />
+                    <Input
+                      {...field}
+                      type="number"
+                      placeholder="Masukkan jumlah"
+                      disabled={isSubmitting}
+                      value={field.value ? field.value.toString() : ""}
+                      data-testid="input-quantity"
+                    />
                   </>
                 )}
               </CustomFormField>
@@ -97,7 +111,12 @@ export default function WasteDeposit() {
               <CustomFormField control={form.control} name="location_id" label="Lokasi Penyetoran">
                 {(field) => (
                   <>
-                    <Select value={field.value ? field.value.toString() : ""} onValueChange={(value) => field.onChange(Number(value))} disabled={isSubmitting}>
+                    <Select
+                      value={field.value ? field.value.toString() : ""}
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      disabled={isSubmitting}
+                      data-testid="select-location"
+                    >
                       <SelectTrigger>
                         {field.value ? data.find((option) => option.id === field.value)?.address || "Lokasi Tidak Diketahui" : "Pilih Lokasi Penyetoran"}
                       </SelectTrigger>
@@ -114,9 +133,15 @@ export default function WasteDeposit() {
               </CustomFormField>
             </div>
             <div>
-              <CustomFormDatePicker control={form.control} name="date_time" label="Tanggal dan Waktu" placeholder="Masukkan Tanggal Penyetoran" />
+              <CustomFormDatePicker
+                control={form.control}
+                name="date_time"
+                label="Tanggal dan Waktu"
+                placeholder="Masukkan Tanggal Penyetoran"
+                data-testid="datepicker-date-time"
+              />
             </div>
-            <Button type="submit" className="w-full bg-green-700 text-white hover:bg-green-800" disabled={isSubmitting}>
+            <Button type="submit" className="w-full bg-green-700 text-white hover:bg-green-800" disabled={isSubmitting} data-testid="submit-button">
               {isSubmitting ? "Mengirim..." : "Setor"}
             </Button>
           </form>

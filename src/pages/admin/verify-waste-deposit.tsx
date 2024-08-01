@@ -74,15 +74,18 @@ export default function VerifyWasteDeposit() {
     <Layout>
       <div className="bg-white dark:bg-gray-950 text-gray-950 dark:text-white p-6 mx-4 md:mx-6 md:py-12">
         <div className="flex flex-col gap-6 mb-4">
-          <h1 className="text-2xl font-bold text-green-900">Verifikasi Penyetoran Sampah</h1>
+          <h1 className="text-2xl font-bold text-green-900" data-testid="header-title">
+            Verifikasi Penyetoran Sampah
+          </h1>
           <div className="flex gap-2 max-w-md">
             <Input
               placeholder="Cari penyetoran..."
               value={searchTerm}
               onChange={handleSearch}
               className="bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white"
+              data-testid="input-search"
             />
-            <Select value={filterStatus} onValueChange={handleFilterStatus}>
+            <Select value={filterStatus} onValueChange={handleFilterStatus} data-testid="select-status">
               <SelectTrigger>
                 <SelectValue placeholder="Filter status" />
               </SelectTrigger>
@@ -110,21 +113,22 @@ export default function VerifyWasteDeposit() {
             </TableHeader>
             <TableBody>
               {filteredDeposits.map((deposit, index) => (
-                <TableRow key={deposit.id} className="hover:bg-gray-100 dark:hover:bg-gray-900">
-                  <TableCell>
+                <TableRow key={deposit.id} className="hover:bg-gray-100 dark:hover:bg-gray-900" data-testid={`deposit-row-${deposit.id}`}>
+                  <TableCell data-testid={`deposit-number-${deposit.id}`}>
                     <Link to={`/admin/deposit/${deposit.id}`}>{index + 1}</Link>
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-testid={`deposit-name-${deposit.id}`}>
                     <Link to={`/admin/deposit/${deposit.id}`}>{deposit.fullname}</Link>
                   </TableCell>
-                  <TableCell>{deposit.type}</TableCell>
-                  <TableCell>{deposit.quantity}</TableCell>
-                  <TableCell>{deposit.depotime}</TableCell>
+                  <TableCell data-testid={`deposit-type-${deposit.id}`}>{deposit.type}</TableCell>
+                  <TableCell data-testid={`deposit-quantity-${deposit.id}`}>{deposit.quantity}</TableCell>
+                  <TableCell data-testid={`deposit-date-${deposit.id}`}>{deposit.depotime}</TableCell>
                   <TableCell>
                     <Badge
                       variant={
                         deposit.status.toLowerCase() === "pending" ? "secondary" : deposit.status.toLowerCase() === "verified" ? "default" : "destructive"
                       }
+                      data-testid={`deposit-status-${deposit.id}`}
                     >
                       {deposit.status}
                     </Badge>
@@ -132,11 +136,11 @@ export default function VerifyWasteDeposit() {
                   <TableCell>
                     {deposit.status.toLowerCase() === "pending" && (
                       <>
-                        <Button variant="ghost" size="icon" onClick={() => handleVerify(deposit.id)}>
+                        <Button variant="ghost" size="icon" onClick={() => handleVerify(deposit.id)} data-testid={`btn-verify-${deposit.id}`}>
                           <CheckIcon className="w-4 h-4" />
                           <span className="sr-only">Verifikasi</span>
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleReject(deposit.id)}>
+                        <Button variant="ghost" size="icon" onClick={() => handleReject(deposit.id)} data-testid={`btn-reject-${deposit.id}`}>
                           <XIcon className="w-4 h-4" />
                           <span className="sr-only">Tolak</span>
                         </Button>

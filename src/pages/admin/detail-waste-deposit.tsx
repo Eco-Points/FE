@@ -55,38 +55,40 @@ export default function DetailWasteDeposit() {
 
   return (
     <Layout>
-      <Card className="w-full max-w-4xl my-4 md:my-8 mx-auto">
+      <Card className="w-full max-w-4xl my-4 md:my-8 mx-auto" data-testid="detail-waste-deposit-card">
         <CardHeader>
-          <CardTitle className="text-green-800">Detail Penyetoran Sampah</CardTitle>
+          <CardTitle className="text-green-800" data-testid="card-title">
+            Detail Penyetoran Sampah
+          </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-6">
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <div data-testid="depositor-name">
               <Label>Nama Penyetor</Label>
               <p>{deposit && deposit.fullname}</p>
             </div>
-            <div>
+            <div data-testid="waste-category">
               <Label>Kategori Sampah</Label>
               <p>{deposit && deposit.type}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <div data-testid="waste-quantity">
               <Label>Jumlah Sampah</Label>
               <p>{deposit && deposit.quantity}</p>
             </div>
-            <div>
+            <div data-testid="deposit-time">
               <Label>Tanggal Penyetoran</Label>
               <p>{deposit && deposit.depotime}</p>
             </div>
           </div>
         </CardContent>
         {deposit && deposit.status.toLowerCase() === "pending" && (
-          <CardFooter className="flex justify-end gap-2">
-            <Button variant="destructive" onClick={handleReject}>
+          <CardFooter className="flex justify-end gap-2" data-testid="card-footer">
+            <Button variant="destructive" onClick={handleReject} data-testid="reject-button">
               Tolak
             </Button>
-            <Button className="bg-green-700" onClick={handleVerify}>
+            <Button className="bg-green-700" onClick={handleVerify} data-testid="verify-button">
               Verifikasi
             </Button>
           </CardFooter>

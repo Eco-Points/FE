@@ -63,32 +63,42 @@ const EditProfile = () => {
   return (
     <Layout>
       <div className="min-h-screen flex items-center justify-center my-2 mx-2 md:mx-auto md:my-6">
-        <Card className="w-full max-w-[600px] p-2 sm:p-8">
+        <Card className="w-full max-w-[600px] p-2 sm:p-8" data-testid="edit-profile-card">
           <CardHeader>
-            <CardTitle className="text-2xl text-green-700 font-bold">Edit Profil</CardTitle>
-            <CardDescription className="text-muted-foreground">Perbarui informasi profilmu</CardDescription>
+            <CardTitle className="text-2xl text-green-700 font-bold" data-testid="edit-profile-title">
+              Edit Profil
+            </CardTitle>
+            <CardDescription className="text-muted-foreground" data-testid="edit-profile-description">
+              Perbarui informasi profilmu
+            </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
             <FormProvider {...methods}>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-testid="edit-profile-form">
                 <div className="grid gap-4">
-                  <CustomFormField name="fullname" label="Nama Lengkap" control={control}>
+                  <CustomFormField name="fullname" label="Nama Lengkap" control={control} data-testid="fullname-field">
                     {(field) => <Input {...field} placeholder="Masukkan nama lengkap" />}
                   </CustomFormField>
-                  <CustomFormField name="email" label="Email" control={control}>
+                  <CustomFormField name="email" label="Email" control={control} data-testid="email-field">
                     {(field) => <Input {...field} type="email" placeholder="Masukkan email" />}
                   </CustomFormField>
-                  <CustomFormField name="phone" label="Nomor Telepon" control={control}>
+                  <CustomFormField name="phone" label="Nomor Telepon" control={control} data-testid="phone-field">
                     {(field) => <Input {...field} type="tel" placeholder="Masukkan nomor telepon" />}
                   </CustomFormField>
-                  <CustomFormField name="address" label="Alamat" control={control}>
+                  <CustomFormField name="address" label="Alamat" control={control} data-testid="address-field">
                     {(field) => <Textarea {...field} placeholder="Masukkan alamat" />}
                   </CustomFormField>
                 </div>
-                <CustomFormField control={methods.control} name="image_url" label="Profile Picture" description="Upload your profile picture">
+                <CustomFormField
+                  control={methods.control}
+                  name="image_url"
+                  label="Profile Picture"
+                  description="Upload your profile picture"
+                  data-testid="profile-picture-field"
+                >
                   {(field) => (
                     <div className="flex items-center gap-4">
-                      <Avatar className="h-16 w-16">
+                      <Avatar className="h-16 w-16" data-testid="profile-avatar">
                         <AvatarImage src={user?.image_url || "/placeholder-user.jpg"} />
                         <AvatarFallback>{user?.fullname?.[0] ?? "?"}</AvatarFallback>
                       </Avatar>
@@ -105,11 +115,11 @@ const EditProfile = () => {
                     </div>
                   )}
                 </CustomFormField>
-                <CardFooter className="flex justify-end gap-2">
-                  <Button variant="outline" type="button" onClick={() => navigate("/profile")}>
+                <CardFooter className="flex justify-end gap-2" data-testid="edit-profile-footer">
+                  <Button variant="outline" type="button" onClick={() => navigate("/profile")} data-testid="cancel-button">
                     Batal
                   </Button>
-                  <Button className="bg-[#00a65a] text-white hover:bg-[#008d4c]" type="submit">
+                  <Button className="bg-[#00a65a] text-white hover:bg-[#008d4c]" type="submit" data-testid="save-button">
                     Simpan Perubahan
                   </Button>
                 </CardFooter>

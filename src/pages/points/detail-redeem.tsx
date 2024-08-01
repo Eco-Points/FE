@@ -56,37 +56,63 @@ export default function DetailRedeem() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!reward) return <div>No Reward Found</div>;
+  if (loading) return <div data-testid="loading">Loading...</div>;
+  if (error) return <div data-testid="error">Error: {error}</div>;
+  if (!reward) return <div data-testid="no-reward">No Reward Found</div>;
 
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center mx-2 md:mx-6">
           <div className="flex items-center justify-center">
-            <img src={reward.image} alt={reward.name} width={350} height={350} className="w-full max-w-[350px] rounded-lg object-cover" />
+            <img
+              src={reward.image}
+              alt={reward.name}
+              width={350}
+              height={350}
+              className="w-full max-w-[350px] rounded-lg object-cover"
+              data-testid="reward-image"
+            />
           </div>
           <div className="space-y-6 flex flex-col justify-center">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">{reward.name}</h1>
-              <p className="text-muted-foreground mt-2">{reward.description}</p>
+              <h1 className="text-3xl font-bold tracking-tight" data-testid="reward-name">
+                {reward.name}
+              </h1>
+              <p className="text-muted-foreground mt-2" data-testid="reward-description">
+                {reward.description}
+              </p>
             </div>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-2xl font-bold">{reward.point_required} Points</span>
-                <span className="text-lg text-muted-foreground">Stock: {reward.stock}</span>
+                <span className="text-2xl font-bold" data-testid="reward-points">
+                  {reward.point_required} Points
+                </span>
+                <span className="text-lg text-muted-foreground" data-testid="reward-stock">
+                  Stock: {reward.stock}
+                </span>
               </div>
             </div>
             <div className="space-y-4">
-              <p className="text-muted-foreground">
-                Upgrade your listening experience with our state-of-the-art wireless headphones. Featuring advanced noise-cancelling technology, premium sound quality, and a sleek, comfortable design, these headphones will transport you to
-                a new level of audio bliss.
+              <p className="text-muted-foreground" data-testid="reward-info">
+                Upgrade your listening experience with our state-of-the-art wireless headphones. Featuring advanced noise-cancelling technology, premium sound
+                quality, and a sleek, comfortable design, these headphones will transport you to a new level of audio bliss.
               </p>
-              <Button size="lg" className="w-full bg-green-700" onClick={handleRedeem} disabled={redeeming || redeemed || reward.stock === 0}>
+              <Button
+                size="lg"
+                className="w-full bg-green-700"
+                onClick={handleRedeem}
+                disabled={redeeming || redeemed || reward.stock === 0}
+                data-testid="redeem-button"
+              >
                 {redeeming ? "Redeeming..." : redeemed ? "Sudah Ditukar" : "Redeem Points"} {/* Teks tombol */}
               </Button>
-              {redeemError && <p className="text-red-600 mt-2">{redeemError}</p>} {/* Tampilkan error jika ada */}
+              {redeemError && (
+                <p className="text-red-600 mt-2" data-testid="redeem-error">
+                  {redeemError}
+                </p>
+              )}{" "}
+              {/* Tampilkan error jika ada */}
             </div>
           </div>
         </div>

@@ -28,48 +28,55 @@ export default function WasteHistory() {
 
   return (
     <Layout>
-      <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-8">
+      <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-8" data-testid="waste-history-container">
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between" data-testid="waste-history-header">
             <div className="">
-              <h1 className="text-2xl font-bold text-green-700">Riwayat Penyetoran Sampah</h1>
+              <h1 className="text-2xl font-bold text-green-700" data-testid="page-title">
+                Riwayat Penyetoran Sampah
+              </h1>
             </div>
-            <Link to="/dashboard" className="inline-flex items-center gap-2 text-green-700 hover:underline hover:text-green-500">
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center gap-2 text-green-700 hover:underline hover:text-green-500"
+              data-testid="back-to-dashboard"
+            >
               <ArrowLeftIcon className="w-4 h-4" />
               Kembali
             </Link>
           </div>
-          <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
-            <Table className="min-w-full">
+          <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm" data-testid="waste-history-table-container">
+            <Table className="min-w-full" data-testid="waste-history-table">
               <TableHeader className="bg-green-50">
-                <TableRow>
-                  <TableHead>#</TableHead>
-                  <TableHead>Tanggal</TableHead>
-                  <TableHead>Nama Pengguna</TableHead>
-                  <TableHead>Kategori Sampah</TableHead>
-                  <TableHead>Jumlah</TableHead>
-                  <TableHead>Status Verifikasi</TableHead>
-                  <TableHead>Poin</TableHead>
+                <TableRow data-testid="table-header">
+                  <TableHead data-testid="table-header-index">#</TableHead>
+                  <TableHead data-testid="table-header-date">Tanggal</TableHead>
+                  <TableHead data-testid="table-header-username">Nama Pengguna</TableHead>
+                  <TableHead data-testid="table-header-trash-category">Kategori Sampah</TableHead>
+                  <TableHead data-testid="table-header-quantity">Jumlah</TableHead>
+                  <TableHead data-testid="table-header-verification-status">Status Verifikasi</TableHead>
+                  <TableHead data-testid="table-header-points">Poin</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {wasteHistory.map((history, index) => (
-                  <TableRow key={history.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{history.depotime}</TableCell>
-                    <TableCell>{history.fullname}</TableCell>
-                    <TableCell>{history.type}</TableCell>
-                    <TableCell>{history.quantity}</TableCell>
-                    <TableCell>
+                  <TableRow key={history.id} data-testid={`table-row-${index}`}>
+                    <TableCell data-testid={`table-cell-index-${index}`}>{index + 1}</TableCell>
+                    <TableCell data-testid={`table-cell-date-${index}`}>{history.depotime}</TableCell>
+                    <TableCell data-testid={`table-cell-username-${index}`}>{history.fullname}</TableCell>
+                    <TableCell data-testid={`table-cell-trash-category-${index}`}>{history.type}</TableCell>
+                    <TableCell data-testid={`table-cell-quantity-${index}`}>{history.quantity}</TableCell>
+                    <TableCell data-testid={`table-cell-verification-status-${index}`}>
                       <Badge
                         variant={
                           history.status.toLowerCase() === "pending" ? "secondary" : history.status.toLowerCase() === "verified" ? "default" : "destructive"
                         }
+                        data-testid={`badge-status-${index}`}
                       >
                         {history.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>{history.point} poin</TableCell>
+                    <TableCell data-testid={`table-cell-points-${index}`}>{history.point} poin</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

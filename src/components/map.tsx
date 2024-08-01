@@ -124,24 +124,39 @@ const WasteLocation: React.FC = () => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full max-w-6xl mx-auto py-8 space-x-4">
-      <div className="flex-1">
+      <div className="flex-1" data-testid="map-container">
         <div className="flex items-center mb-4 space-x-4">
-          <Button onClick={handleFindNearest} className="bg-green-600 text-white hover:bg-green-700">
+          <Button onClick={handleFindNearest} className="bg-green-600 text-white hover:bg-green-700" data-testid="find-nearest-button">
             Cari Lokasi Terdekat
           </Button>
-          <Button onClick={handleViewMyLocation} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white" disabled={!userLocation}>
+          <Button
+            onClick={handleViewMyLocation}
+            className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white"
+            disabled={!userLocation}
+            data-testid="view-my-location-button"
+          >
             Lihat Lokasi Saya
           </Button>
         </div>
-        <MapContainer center={userLocation ? [userLocation.latitude, userLocation.longitude] : [0, 0]} zoom={userLocation ? 13 : 2} style={{ height: "100%", width: "100%" }}>
+        <MapContainer
+          center={userLocation ? [userLocation.latitude, userLocation.longitude] : [0, 0]}
+          zoom={userLocation ? 13 : 2}
+          style={{ height: "100%", width: "100%" }}
+          data-testid="map-container"
+        >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap contributors" />
           {userLocation && (
-            <Marker position={[userLocation.latitude, userLocation.longitude]} icon={userIcon}>
+            <Marker position={[userLocation.latitude, userLocation.longitude]} icon={userIcon} data-testid="user-location-marker">
               <Popup>Lokasi Anda Saat Ini</Popup>
             </Marker>
           )}
           {nearestLocations.map((location) => (
-            <Marker key={location.id} position={[parseFloat(location.lat), parseFloat(location.long)]} icon={wasteIcon}>
+            <Marker
+              key={location.id}
+              position={[parseFloat(location.lat), parseFloat(location.long)]}
+              icon={wasteIcon}
+              data-testid={`waste-location-marker-${location.id}`}
+            >
               <Popup>
                 <strong>{location.name}</strong>
                 <br />
@@ -151,7 +166,11 @@ const WasteLocation: React.FC = () => {
                 <br />
                 Status: {location.status}
                 <br />
-                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
+                <Button
+                  onClick={() => handleNavigate(location)}
+                  className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2"
+                  data-testid={`navigate-button-${location.id}`}
+                >
                   Arahkan ke Lokasi
                 </Button>
               </Popup>
@@ -160,7 +179,7 @@ const WasteLocation: React.FC = () => {
           <MapWithCenter />
         </MapContainer>
       </div>
-      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px]">
+      <div className="w-full lg:w-1/3 bg-white border border-gray-300 rounded-lg p-4 overflow-y-auto h-[500px]" data-testid="location-list">
         <h2 className="text-xl font-bold mb-4">Daftar Lokasi Waste</h2>
         {loading ? (
           <p>Loading...</p>
@@ -169,14 +188,18 @@ const WasteLocation: React.FC = () => {
         ) : (
           <ul>
             {nearestLocations.map((location) => (
-              <li key={location.id} className="mb-4">
+              <li key={location.id} className="mb-4" data-testid={`location-list-item-${location.id}`}>
                 <h3 className="font-semibold">{location.name}</h3>
                 <p>{location.address}</p>
                 <p>
                   Jam Buka: {location.start} - {location.end}
                 </p>
                 <p>Status: {location.status}</p>
-                <Button onClick={() => handleNavigate(location)} className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2">
+                <Button
+                  onClick={() => handleNavigate(location)}
+                  className="bg-white border-2 border-green-500 text-green-500 hover:bg-green-600 hover:text-white mt-2"
+                  data-testid={`navigate-button-list-${location.id}`}
+                >
                   Arahkan ke Lokasi
                 </Button>
               </li>
