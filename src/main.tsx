@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
-import { Toaster } from "sonner";
 import React from "react";
+
+import { Toaster } from "@/components/ui/sonner";
 
 import { TokenProvider } from "./utils/contexts/token";
 import App from "./routes";
