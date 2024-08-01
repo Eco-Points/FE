@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
 import { getAllRewards } from "@/utils/apis/rewards";
@@ -18,10 +20,15 @@ const RedeemPoin = () => {
       try {
         const { data } = await getAllRewards(page, 4);
         console.log("Fetched rewards:", data);
-        setRewards((prevRewards) => [...prevRewards, ...data]);
-        setHasMore(data.length > 0);
+
+        // Check for redundancy
+        const newRewards = data.filter((reward: IReward) => !rewards.some((r) => r.reward_id === reward.reward_id));
+
+        setRewards((prevRewards) => [...prevRewards, ...newRewards]);
+        setHasMore(newRewards.length > 0);
       } catch (error: any) {
         setError(error.message);
+        toast.error("Error fetching rewards");
       } finally {
         setLoading(false);
       }
