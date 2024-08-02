@@ -4,41 +4,50 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
-import { getAllRewards } from "@/utils/apis/rewards";
+import { getRewards } from "@/utils/apis/rewards";
 import { IReward } from "@/utils/types/rewards";
 
-const RedeemPoin = () => {
-  const [rewards, setRewards] = useState<IReward[]>([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [hasMore, setHasMore] = useState(true);
+// Jumlah item yang ditampilkan per halaman
+const ITEMS_PER_PAGE = 4;
 
+const RedeemPoin = () => {
+  // State untuk menyimpan semua reward yang diambil
+  const [rewards, setRewards] = useState<IReward[]>([]);
+  // State untuk menyimpan reward yang saat ini ditampilkan
+  const [displayedRewards, setDisplayedRewards] = useState<IReward[]>([]);
+  // State untuk mengelola status loading
+  const [loading, setLoading] = useState(false);
+  // State untuk menyimpan pesan kesalahan
+  const [error, setError] = useState<string | null>(null);
+  // State untuk melacak halaman saat ini untuk fungsi "Load More"
+  const [page, setPage] = useState(1);
+
+  // Efek untuk mengambil reward ketika komponen pertama kali dimuat
   useEffect(() => {
     const fetchRewards = async () => {
-      setLoading(true);
+      setLoading(true); // Mengatur state loading menjadi true
       try {
-        const { data } = await getAllRewards(page, 4);
+        const { data } = await getRewards(); // Mengambil semua reward
         console.log("Fetched rewards:", data);
-
-        // Check for redundancy
-        const newRewards = data.filter((reward: IReward) => !rewards.some((r) => r.reward_id === reward.reward_id));
-
-        setRewards((prevRewards) => [...prevRewards, ...newRewards]);
-        setHasMore(newRewards.length > 0);
+        setRewards(data); // Menyimpan semua reward
+        setDisplayedRewards(data.slice(0, ITEMS_PER_PAGE)); // Menampilkan set pertama dari reward
       } catch (error: any) {
-        setError(error.message);
-        toast.error("Error fetching rewards");
+        setError(error.message); // Mengatur pesan kesalahan jika pengambilan gagal
+        toast.error("Error fetching rewards"); // Menampilkan notifikasi kesalahan
       } finally {
-        setLoading(false);
+        setLoading(false); // Mengatur state loading menjadi false
       }
     };
 
     fetchRewards();
-  }, [page]);
+  }, []);
 
+  // Fungsi untuk memuat lebih banyak reward ketika tombol "Load More" diklik
   const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+    const nextPage = page + 1; // Menghitung halaman berikutnya
+    const newRewards = rewards.slice(0, nextPage * ITEMS_PER_PAGE); // Mendapatkan set reward berikutnya
+    setDisplayedRewards(newRewards); // Memperbarui reward yang ditampilkan
+    setPage(nextPage); // Memperbarui state halaman
   };
 
   return (
@@ -54,7 +63,7 @@ const RedeemPoin = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6" data-testid="rewards-grid">
-            {rewards.map((reward) => (
+            {displayedRewards.map((reward) => (
               <Link to={`/points/detail-redeem/${reward.reward_id}`} key={reward.reward_id} data-testid={`reward-link-${reward.reward_id}`}>
                 <div className="bg-white rounded-lg p-4 flex flex-col shadow-md" data-testid={`reward-card-${reward.reward_id}`}>
                   <img src={reward.image} alt={reward.name} className="mb-4 w-full" data-testid={`reward-image-${reward.reward_id}`} />
@@ -78,7 +87,7 @@ const RedeemPoin = () => {
           </div>
           {loading && <div data-testid="loading">Loading...</div>}
           {error && <div data-testid="error">Error: {error}</div>}
-          {hasMore && !loading && (
+          {displayedRewards.length < rewards.length && !loading && (
             <Button className="mt-4 bg-green-600 text-white hover:bg-green-500" onClick={loadMore} data-testid="load-more-button">
               Load More
             </Button>
