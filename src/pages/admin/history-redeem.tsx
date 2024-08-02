@@ -5,8 +5,8 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
 
-import { getExcelRewardtUser } from "@/utils/apis/excel";
-import { getExchangeUser } from "@/utils/apis/exchange";
+import { getExcelRewardAdmin } from "@/utils/apis/excel";
+import { getExchangeAdmin } from "@/utils/apis/exchange";
 import { IExchange } from "@/utils/types/exchange";
 
 export default function RedeemHistory() {
@@ -18,7 +18,7 @@ export default function RedeemHistory() {
 
   async function getExchangeHistory() {
     try {
-      const response = await getExchangeUser();
+      const response = await getExchangeAdmin();
       setRedeemHistory(response.data || []);
     } catch (error) {
       toast.error((error as Error).message);
@@ -27,7 +27,7 @@ export default function RedeemHistory() {
 
   const handleDownload = async () => {
     try {
-      const response = await getExcelRewardtUser();
+      const response = await getExcelRewardAdmin();
       const { tanggal, link } = response.data;
       const a = document.createElement("a");
       a.href = link;

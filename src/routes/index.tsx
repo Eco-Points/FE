@@ -26,6 +26,7 @@ import AboutUsPage from "@/pages/about";
 import NotFoundPage from "@/pages/not-found";
 import SuspendPage from "@/pages/suspend";
 import AddLocationPage from "@/pages/admin/add-location";
+import AdminHistoryRedeemPage from "@/pages/admin/history-redeem";
 import ProtectedRoute from "./protected-route";
 
 export default function Router() {
@@ -132,6 +133,11 @@ export default function Router() {
           path: "/admin/add-location",
           loader: () => "Add Location | Eco-Points",
           element: <AddLocationPage />,
+        },
+        {
+          path: "/admin/history-redeem",
+          loader: () => "Admin History Redeem | Eco-Points",
+          element: <AdminHistoryRedeemPage />,
         },
         {
           path: "/points/detail-redeem/:reward_id",
