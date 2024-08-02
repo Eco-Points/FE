@@ -8,11 +8,7 @@ export default function NotFound() {
   let redirectTo = "/";
 
   if (token) {
-    if (user && user.is_admin) {
-      redirectTo = "/admin/dashboard";
-    } else {
-      redirectTo = "/dashboard";
-    }
+    redirectTo = user?.is_admin ? "/admin/dashboard" : "/dashboard";
   }
 
   return (
@@ -28,7 +24,7 @@ export default function NotFound() {
         <div className="mt-6">
           <Link
             to={redirectTo}
-            className="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#008d4c] focus:outline-none focus:ring-2 focus:ring-[#00a65a] focus:ring-offset-2"
+            className="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             data-testid="not-found-link"
           >
             Kembali ke Halaman Utama

@@ -20,7 +20,7 @@ import { TRASH_OPTIONS } from "@/utils/const";
 export default function WasteDeposit() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [data, setData] = useState<IGetLocation[]>([]);
+  const [locations, setLocations] = useState<IGetLocation[]>([]);
 
   const form = useForm<DepositSchema>({
     resolver: zodResolver(depositSchema),
@@ -33,19 +33,19 @@ export default function WasteDeposit() {
   });
 
   useEffect(() => {
-    fetchLocation();
+    fetchLocations();
   }, []);
 
-  async function fetchLocation() {
+  const fetchLocations = async () => {
     try {
       const response = await getlocation();
-      setData(response || []);
+      setLocations(response || []);
     } catch (error) {
       toast.error("Gagal mengambil data lokasi.");
     }
-  }
+  };
 
-  const onSubmit = async (data: DepositSchema) => {
+  const handleSubmit = async (data: DepositSchema) => {
     setIsSubmitting(true);
     try {
       await createDeposit(data);
@@ -61,86 +61,63 @@ export default function WasteDeposit() {
   return (
     <Layout>
       <div className="w-full max-w-md mx-auto py-8 border shadow-md my-4 md:my-8 px-2 md:px-8 rounded-lg" data-testid="waste-deposit-form-container">
-        <div className="text-start mb-6">
-          <h1 className="text-2xl font-bold text-green-700" data-testid="form-title">
-            Setor Sampah
-          </h1>
-        </div>
+        <h1 className="text-2xl font-bold text-green-700 mb-6" data-testid="form-title">
+          Setor Sampah
+        </h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" data-testid="waste-deposit-form">
-            <div>
-              <CustomFormField control={form.control} name="trash_id" label="Jenis Sampah">
-                {(field) => (
-                  <>
-                    <Select
-                      value={field.value ? field.value.toString() : ""}
-                      onValueChange={(value) => field.onChange(Number(value))}
-                      disabled={isSubmitting}
-                      data-testid="select-trash-type"
-                    >
-                      <SelectTrigger>{field.value ? TRASH_OPTIONS.find((option) => option.value === field.value)?.label : "Pilih Jenis Sampah"}</SelectTrigger>
-                      <SelectContent>
-                        {TRASH_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value.toString()}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </>
-                )}
-              </CustomFormField>
-            </div>
-            <div>
-              <CustomFormField control={form.control} name="quantity" label="Jumlah Satuan">
-                {(field) => (
-                  <>
-                    <Input
-                      {...field}
-                      type="number"
-                      placeholder="Masukkan jumlah"
-                      disabled={isSubmitting}
-                      value={field.value ? field.value.toString() : ""}
-                      data-testid="input-quantity"
-                    />
-                  </>
-                )}
-              </CustomFormField>
-            </div>
-            <div>
-              <CustomFormField control={form.control} name="location_id" label="Lokasi Penyetoran">
-                {(field) => (
-                  <>
-                    <Select
-                      value={field.value ? field.value.toString() : ""}
-                      onValueChange={(value) => field.onChange(Number(value))}
-                      disabled={isSubmitting}
-                      data-testid="select-location"
-                    >
-                      <SelectTrigger>
-                        {field.value ? data.find((option) => option.id === field.value)?.address || "Lokasi Tidak Diketahui" : "Pilih Lokasi Penyetoran"}
-                      </SelectTrigger>
-                      <SelectContent style={{ maxHeight: "200px", overflowY: "auto" }}>
-                        {data.map((option) => (
-                          <SelectItem key={option.id} value={option.id.toString()}>
-                            {option.address}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </>
-                )}
-              </CustomFormField>
-            </div>
-            <div>
-              <CustomFormDatePicker
-                control={form.control}
-                name="date_time"
-                label="Tanggal dan Waktu"
-                placeholder="Masukkan Tanggal Penyetoran"
-                data-testid="datepicker-date-time"
-              />
-            </div>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4" data-testid="waste-deposit-form">
+            <CustomFormField control={form.control} name="trash_id" label="Jenis Sampah">
+              {(field) => (
+                <Select
+                  value={field.value?.toString() || ""}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                  disabled={isSubmitting}
+                  data-testid="select-trash-type"
+                >
+                  <SelectTrigger>{field.value ? TRASH_OPTIONS.find((option) => option.value === field.value)?.label : "Pilih Jenis Sampah"}</SelectTrigger>
+                  <SelectContent>
+                    {TRASH_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value.toString()}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </CustomFormField>
+            <CustomFormField control={form.control} name="quantity" label="Jumlah Satuan">
+              {(field) => (
+                <Input {...field} type="number" placeholder="Masukkan jumlah" disabled={isSubmitting} value={field.value || ""} data-testid="input-quantity" />
+              )}
+            </CustomFormField>
+            <CustomFormField control={form.control} name="location_id" label="Lokasi Penyetoran">
+              {(field) => (
+                <Select
+                  value={field.value?.toString() || ""}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                  disabled={isSubmitting}
+                  data-testid="select-location"
+                >
+                  <SelectTrigger>
+                    {field.value ? locations.find((option) => option.id === field.value)?.address || "Lokasi Tidak Diketahui" : "Pilih Lokasi Penyetoran"}
+                  </SelectTrigger>
+                  <SelectContent style={{ maxHeight: "200px", overflowY: "auto" }}>
+                    {locations.map((option) => (
+                      <SelectItem key={option.id} value={option.id.toString()}>
+                        {option.address}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </CustomFormField>
+            <CustomFormDatePicker
+              control={form.control}
+              name="date_time"
+              label="Tanggal dan Waktu"
+              placeholder="Masukkan Tanggal Penyetoran"
+              data-testid="datepicker-date-time"
+            />
             <Button type="submit" className="w-full bg-green-700 text-white hover:bg-green-800" disabled={isSubmitting} data-testid="submit-button">
               {isSubmitting ? "Mengirim..." : "Setor"}
             </Button>

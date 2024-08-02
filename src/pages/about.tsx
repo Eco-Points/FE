@@ -6,7 +6,7 @@ export default function AboutUs() {
     <Layout>
       <main className="flex-1 py-12 md:py-20 px-4 md:px-6" data-testid="about-us-page">
         <div className="md:container mx-auto space-y-8">
-          <div className="text-center" data-testid="about-us-header">
+          <section className="text-center" data-testid="about-us-header">
             <h1 className="text-4xl font-bold tracking-tight text-green-700 mb-6" data-testid="about-us-title">
               Tentang Kami
             </h1>
@@ -14,9 +14,9 @@ export default function AboutUs() {
               EcoPoints adalah aplikasi inovatif yang dirancang untuk mendorong partisipasi masyarakat dalam pengelolaan sampah. Dengan mengumpulkan poin dari
               setiap penyetoran sampah, pengguna dapat menukarkannya dengan berbagai hadiah dan diskon menarik.
             </p>
-          </div>
+          </section>
 
-          <div className="space-y-8" data-testid="our-team-section">
+          <section className="space-y-8" data-testid="our-team-section">
             <h2 className="text-3xl font-bold text-center text-green-700" data-testid="team-title">
               Tim Kami
             </h2>
@@ -106,7 +106,7 @@ export default function AboutUs() {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </main>
     </Layout>

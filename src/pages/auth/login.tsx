@@ -29,9 +29,9 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      if (user?.status === "suspended") {
+      if (user.status === "suspended") {
         navigate("/suspend");
-      } else if (user?.is_admin) {
+      } else if (user.is_admin) {
         navigate("/admin/dashboard");
       } else {
         navigate("/dashboard");
@@ -39,7 +39,7 @@ export default function Login() {
     }
   }, [user, navigate]);
 
-  async function onSubmit(data: LoginSchema) {
+  const onSubmit = async (data: LoginSchema) => {
     try {
       const response = await userLogin(data);
       changeToken(response.data.token);
@@ -47,11 +47,11 @@ export default function Login() {
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }
+  };
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center py-4 md:py-8">
+      <div className="flex flex-col items-center justify-center py-4 px-2 md:py-8">
         <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
           <div className="flex items-center gap-2 mb-6">
             <LeafIcon className="w-8 h-8 text-green-500" />
@@ -98,7 +98,7 @@ export default function Login() {
           <div className="text-center mt-4">
             <p className="text-green-500">
               Belum punya akun?{" "}
-              <Link to={"/register"} className="text-green-500 hover:text-green-600 font-medium">
+              <Link to="/register" className="text-green-500 hover:text-green-600 font-medium" data-testid="link-register">
                 Daftar di sini.
               </Link>
             </p>
@@ -106,13 +106,13 @@ export default function Login() {
           <div className="mt-6 text-center text-gray-500">
             <p>&copy; 2023 EcoPoints. Ikuti kami di:</p>
             <div className="flex justify-center mt-2">
-              <Link to={"/"} className="mx-2">
+              <Link to="/" className="mx-2" aria-label="Facebook">
                 <FacebookIcon className="w-5 h-5 text-green-500 hover:text-green-600" />
               </Link>
-              <Link to={"/"} className="mx-2">
+              <Link to="/" className="mx-2" aria-label="Twitter">
                 <TwitterIcon className="w-5 h-5 text-green-500 hover:text-green-600" />
               </Link>
-              <Link to={"/"} className="mx-2">
+              <Link to="/" className="mx-2" aria-label="Instagram">
                 <InstagramIcon className="w-5 h-5 text-green-500 hover:text-green-600" />
               </Link>
             </div>

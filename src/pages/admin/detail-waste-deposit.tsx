@@ -9,6 +9,7 @@ import Layout from "@/components/layout";
 
 import { getDepositById, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
+import { formatDate } from "@/utils/function";
 
 export default function DetailWasteDeposit() {
   const { deposit_id } = useParams<{ deposit_id: string }>();
@@ -16,37 +17,25 @@ export default function DetailWasteDeposit() {
 
   useEffect(() => {
     if (deposit_id) {
-      fetchDeposit(+deposit_id);
+      fetchDeposit(Number(deposit_id));
     }
   }, [deposit_id]);
 
-  async function fetchDeposit(deposit_id: number) {
+  const fetchDeposit = async (id: number) => {
     try {
-      const response = await getDepositById(deposit_id);
+      const response = await getDepositById(id);
       setDeposit(response.data);
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }
-
-  const handleVerify = async () => {
-    if (deposit) {
-      try {
-        await updateDepositStatus(deposit.id, "verified");
-        setDeposit({ ...deposit, status: "verified" });
-        toast.success("Penyetoran sampah berhasil diverifikasi.");
-      } catch (error) {
-        toast.error((error as Error).message);
-      }
-    }
   };
 
-  const handleReject = async () => {
+  const handleStatusUpdate = async (status: "verified" | "rejected") => {
     if (deposit) {
       try {
-        await updateDepositStatus(deposit.id, "rejected");
-        setDeposit({ ...deposit, status: "rejected" });
-        toast.success("Penyetoran sampah berhasil ditolak.");
+        await updateDepositStatus(deposit.id, status);
+        setDeposit({ ...deposit, status });
+        toast.success(`Penyetoran sampah berhasil ${status === "verified" ? "diverifikasi" : "ditolak"}.`);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -65,30 +54,30 @@ export default function DetailWasteDeposit() {
           <div className="grid grid-cols-2 gap-4">
             <div data-testid="depositor-name">
               <Label>Nama Penyetor</Label>
-              <p>{deposit && deposit.fullname}</p>
+              <p>{deposit?.fullname}</p>
             </div>
             <div data-testid="waste-category">
               <Label>Kategori Sampah</Label>
-              <p>{deposit && deposit.type}</p>
+              <p>{deposit?.type}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div data-testid="waste-quantity">
               <Label>Jumlah Sampah</Label>
-              <p>{deposit && deposit.quantity}</p>
+              <p>{deposit?.quantity}</p>
             </div>
             <div data-testid="deposit-time">
               <Label>Tanggal Penyetoran</Label>
-              <p>{deposit && deposit.depotime}</p>
+              <p>{formatDate(deposit?.depotime || "")}</p>
             </div>
           </div>
         </CardContent>
-        {deposit && deposit.status.toLowerCase() === "pending" && (
+        {deposit?.status.toLowerCase() === "pending" && (
           <CardFooter className="flex justify-end gap-2" data-testid="card-footer">
-            <Button variant="destructive" onClick={handleReject} data-testid="reject-button">
+            <Button variant="destructive" onClick={() => handleStatusUpdate("rejected")} data-testid="reject-button">
               Tolak
             </Button>
-            <Button className="bg-green-700" onClick={handleVerify} data-testid="verify-button">
+            <Button className="bg-green-700" onClick={() => handleStatusUpdate("verified")} data-testid="verify-button">
               Verifikasi
             </Button>
           </CardFooter>

@@ -27,7 +27,7 @@ export default function AddReward() {
     },
   });
 
-  async function onSubmit(data: AddRewardSchema) {
+  const onSubmit = async (data: AddRewardSchema) => {
     try {
       const response = await addReward(data);
       toast.success(response.message);
@@ -35,23 +35,23 @@ export default function AddReward() {
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }
+  };
 
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 max-w-2xl" data-testid="add-reward-page">
         <div className="bg-background rounded-lg shadow-lg p-6">
           <div className="space-y-4">
-            <div>
-              <h1 className="text-2xl font-bold text-green-700" data-testid="title">
+            <header>
+              <h1 className="text-2xl font-bold text-green-700" data-testid="page-title">
                 Tambah Hadiah Baru
               </h1>
-              <p className="text-muted-foreground" data-testid="description">
+              <p className="text-muted-foreground" data-testid="page-description">
                 Tambahkan hadiah baru yang bisa ditukarkan dengan poin oleh pengguna.
               </p>
-            </div>
+            </header>
             <Form {...form}>
-              <form data-testid="form-add-rewards" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form data-testid="reward-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <CustomFormField control={form.control} name="name" label="Nama Hadiah">
                   {(field) => (
                     <Input
@@ -93,8 +93,8 @@ export default function AddReward() {
                       placeholder="Masukkan jumlah stok"
                       type="number"
                       disabled={form.formState.isSubmitting}
-                      aria-disabled={form.formState.isSubmitting}
                       {...field}
+                      aria-disabled={form.formState.isSubmitting}
                     />
                   )}
                 </CustomFormField>
@@ -118,13 +118,13 @@ export default function AddReward() {
                     </Link>
                   </Button>
                   <Button
-                    data-testid="btn-submit"
                     type="submit"
+                    data-testid="button-submit"
                     className="bg-green-700 hover:bg-green-800 text-white"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                   >
-                    Tambah hadiah
+                    Tambah Hadiah
                   </Button>
                 </div>
               </form>
