@@ -68,7 +68,10 @@ export default function AdminDashboard() {
             <Card data-testid="exchange-count-card">
               <CardHeader>
                 <CardDescription>Hadiah Ditukarkan</CardDescription>
-                <CardTitle>{dashboardData.exchange_count}</CardTitle>
+                <div className="flex gap-3 justify-between">
+                  <CardTitle>{dashboardData.exchange_count}</CardTitle>
+                  <Link to={"/admin/history-redeem"} className="text-green-800 hover:underline">detail</Link>
+                </div>
               </CardHeader>
             </Card>
           </div>

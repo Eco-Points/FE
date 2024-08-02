@@ -1,11 +1,13 @@
-import Layout from "@/components/layout";
-import { Card, CardContent } from "@/components/ui/card";
-import { getProfile } from "@/utils/apis/users";
-import { ProfileType } from "@/utils/types/users";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, GiftIcon, HistoryIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+
+import { Card, CardContent } from "@/components/ui/card";
+import Layout from "@/components/layout";
+
+import { getProfile } from "@/utils/apis/users";
+import { ProfileType } from "@/utils/types/users";
 
 export default function DashboardUser() {
   const [user, setUser] = useState<ProfileType>();
@@ -38,18 +40,58 @@ export default function DashboardUser() {
               Saldo Poin: <span className="font-bold">{user?.point}</span>
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8" data-testid="dashboard-links">
-            <Link to="/waste/deposit" className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-100 transition-colors" data-testid="deposit-link">
-              <h3 className="text-lg font-semibold mb-2">Setor Sampah</h3>
-              <p className="text-gray-700">Setorkan sampahmu untuk mendapatkan poin!</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8" data-testid="dashboard-links">
+            <Link
+              to="/waste/deposit"
+              className="bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg shadow-lg p-6 hover:from-green-500 hover:to-green-700 transition-transform transform hover:scale-105"
+              data-testid="deposit-link"
+            >
+              <div className="flex items-center gap-4">
+                <TrashIcon className="w-8 h-8" />
+                <div>
+                  <h3 className="text-xl font-semibold">Setor Sampah</h3>
+                  <p className="text-sm">Setorkan sampahmu untuk mendapatkan poin!</p>
+                </div>
+              </div>
             </Link>
-            <Link to="/waste/history" className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-100 transition-colors" data-testid="history-link">
-              <h3 className="text-lg font-semibold mb-2">Riwayat Penyetoran</h3>
-              <p className="text-gray-700">Lihat riwayat penyetoran sampahmu.</p>
+            <Link
+              to="/waste/history"
+              className="bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg shadow-lg p-6 hover:from-blue-500 hover:to-blue-700 transition-transform transform hover:scale-105"
+              data-testid="history-link"
+            >
+              <div className="flex items-center gap-4">
+                <HistoryIcon className="w-8 h-8" />
+                <div>
+                  <h3 className="text-xl font-semibold">Riwayat Penyetoran</h3>
+                  <p className="text-sm">Lihat riwayat penyetoran sampahmu.</p>
+                </div>
+              </div>
             </Link>
-            <Link to="/points/redeem" className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-100 transition-colors" data-testid="redeem-link">
-              <h3 className="text-lg font-semibold mb-2">Tukar Poin</h3>
-              <p className="text-gray-700">Tukarkan poinmu dengan hadiah menarik.</p>
+            <Link
+              to="/points/redeem"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-lg shadow-lg p-6 hover:from-yellow-500 hover:to-yellow-700 transition-transform transform hover:scale-105"
+              data-testid="redeem-link"
+            >
+              <div className="flex items-center gap-4">
+                <GiftIcon className="w-8 h-8" />
+                <div>
+                  <h3 className="text-xl font-semibold">Tukar Poin</h3>
+                  <p className="text-sm">Tukarkan poinmu dengan hadiah menarik.</p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              to="/points/history"
+              className="bg-gradient-to-r from-purple-400 to-purple-600 text-white rounded-lg shadow-lg p-6 hover:from-purple-500 hover:to-purple-700 transition-transform transform hover:scale-105"
+              data-testid="history-redeem-link"
+            >
+              <div className="flex items-center gap-4">
+                <HistoryIcon className="w-8 h-8" />
+                <div>
+                  <h3 className="text-xl font-semibold">Riwayat Tukar Poin</h3>
+                  <p className="text-sm">Lihat riwayat Penukaran Poinmu.</p>
+                </div>
+              </div>
             </Link>
           </div>
         </div>

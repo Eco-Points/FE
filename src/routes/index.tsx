@@ -17,6 +17,7 @@ import WasteDepositPage from "@/pages/waste/deposit";
 import WasteHistoryPage from "@/pages/waste/history";
 import AddRewardPage from "@/pages/admin/add-reward";
 import RedeemPointsPage from "@/pages/points/redeem";
+import HistoryRedeemPointsPage from "@/pages/points/history-redeem";
 import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
 import DetailRedeemPoinPage from "@/pages/points/detail-redeem";
 import ContactUs from "@/pages/contactUs/contact-us";
@@ -25,6 +26,7 @@ import AboutUsPage from "@/pages/about";
 import NotFoundPage from "@/pages/not-found";
 import SuspendPage from "@/pages/suspend";
 import AddLocationPage from "@/pages/admin/add-location";
+import AdminHistoryRedeemPage from "@/pages/admin/history-redeem";
 import ProtectedRoute from "./protected-route";
 
 export default function Router() {
@@ -123,9 +125,19 @@ export default function Router() {
           element: <RedeemPointsPage />,
         },
         {
+          path: "/points/history",
+          loader: () => "Redeem History | Eco-Points",
+          element: <HistoryRedeemPointsPage />,
+        },
+        {
           path: "/admin/add-location",
           loader: () => "Add Location | Eco-Points",
           element: <AddLocationPage />,
+        },
+        {
+          path: "/admin/history-redeem",
+          loader: () => "Admin History Redeem | Eco-Points",
+          element: <AdminHistoryRedeemPage />,
         },
         {
           path: "/points/detail-redeem/:reward_id",

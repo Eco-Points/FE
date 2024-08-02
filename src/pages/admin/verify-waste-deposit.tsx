@@ -12,7 +12,7 @@ import Layout from "@/components/layout";
 
 import { getDepositAdmin, updateDepositStatus } from "@/utils/apis/admin-waste-deposit";
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
-import { getExcelAdmin } from "@/utils/apis/excel";
+import { getExcelDepositAdmin } from "@/utils/apis/excel";
 
 export default function VerifyWasteDeposit() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +73,7 @@ export default function VerifyWasteDeposit() {
 
   const handleDownload = async () => {
     try {
-      const response = await getExcelAdmin();
+      const response = await getExcelDepositAdmin();
       const { tanggal, link } = response.data;
       const a = document.createElement("a");
       a.href = link;
