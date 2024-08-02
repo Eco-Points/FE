@@ -1,25 +1,30 @@
-import { PieChart, Pie, Tooltip, Cell } from "recharts";
+// PiechartcustomChart.tsx
+import React from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useChart } from "@/utils/contexts/chartContext";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+interface PiechartcustomChartProps {
+  data: Array<{ name: string; value: number; color: string }>;
+}
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const PiechartcustomChart: React.FC<PiechartcustomChartProps> = ({ data }) => {
+  useChart(); // Mengakses konteks jika perlu
 
-export default function PiechartcustomChart(props: React.HTMLAttributes<HTMLDivElement>) {
+  // Pastikan data adalah array dan bukan undefined/null
+  const safeData = Array.isArray(data) ? data : [];
+
   return (
-    <div {...props}>
-      <PieChart width={400} height={400}>
-        <Pie data={data} cx={200} cy={200} labelLine={false} label outerRadius={80} fill="#8884d8" dataKey="value">
-          {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+    <div className="aspect-[4/3]">
+      <PieChart>
+        <Pie data={safeData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius="80%" fill="#8884d8">
+          {safeData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
         <Tooltip />
       </PieChart>
     </div>
   );
-}
+};
+
+export default PiechartcustomChart;
