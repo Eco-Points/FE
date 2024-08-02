@@ -7,9 +7,7 @@ export default function Footer() {
       <div className="md:container mx-auto flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-2 font-bold text-xl" data-testid="footer-logo">
           <LeafIcon className="w-6 h-6" />
-          <Link to="/">
-            EcoPoints
-          </Link>
+          <Link to="/">EcoPoints</Link>
         </div>
         <div data-testid="footer-copyright">
           <p>&copy; 2024 EcoPoints. All rights reserved.</p>

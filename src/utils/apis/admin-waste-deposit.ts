@@ -14,7 +14,7 @@ export const getDeposit = async () => {
 
 export const getDepositAdmin = async () => {
   try {
-    const response = await axiosWithConfig.get("/deposit?limit=20&offset=0&is_admin=true");
+    const response = await axiosWithConfig.get("/deposit?limit=300&offset=0&is_admin=true");
     return response.data as IResponse<IGetDeposit[]>;
   } catch (error: any) {
     const { message } = error.response.data;

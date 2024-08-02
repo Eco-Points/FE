@@ -8,6 +8,7 @@ import { useToken } from "@/utils/contexts/token";
 
 export default function Index() {
   const { token } = useToken();
+
   return (
     <Layout>
       <main data-testid="main-section" className="flex-1 py-12 px-4 md:px-6">
@@ -42,6 +43,7 @@ export default function Index() {
           </div>
         </div>
       </main>
+
       <section data-testid="features-section" className="bg-green-50 py-12 px-4 md:px-6">
         <div className="md:container mx-auto grid md:grid-cols-3 gap-8">
           <div data-testid="feature-1" className="space-y-2 flex flex-col items-center md:items-start">
@@ -61,10 +63,13 @@ export default function Index() {
           </div>
         </div>
       </section>
+
       <section data-testid="news-section" className="py-12 px-4 md:px-6">
         <div className="md:container mx-auto">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold text-green-700">Berita Terbaru</h2>
+            <h2 className="text-3xl font-bold text-green-700" data-testid="news-title">
+              Berita Terbaru
+            </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Card data-testid="news-1">
                 <CardContent className="pt-4">
@@ -81,6 +86,7 @@ export default function Index() {
                     <Link
                       to={"https://www.panggungharjo.desa.id/memilah-sampah-dari-rumah/"}
                       target="_blank"
+                      data-testid="news-1-link"
                       className="inline-flex items-center gap-1 text-green-600 hover:underline"
                     >
                       Baca Selengkapnya
@@ -89,6 +95,7 @@ export default function Index() {
                   </div>
                 </CardContent>
               </Card>
+
               <Card data-testid="news-2">
                 <CardContent className="pt-4">
                   <img
@@ -104,6 +111,7 @@ export default function Index() {
                     <Link
                       to={"https://www.klinklin.co.id/manfaat-dan-tips-menjaga-kebersihan-lingkungan/"}
                       target="_blank"
+                      data-testid="news-2-link"
                       className="inline-flex items-center gap-1 text-green-600 hover:underline"
                     >
                       Baca Selengkapnya
@@ -112,6 +120,7 @@ export default function Index() {
                   </div>
                 </CardContent>
               </Card>
+
               <Card data-testid="news-3">
                 <CardContent className="pt-4">
                   <img
@@ -127,6 +136,7 @@ export default function Index() {
                     <Link
                       to={"https://irppapercup.com/manfaat-daur-ulang-sampah-plastik/"}
                       target="_blank"
+                      data-testid="news-3-link"
                       className="inline-flex items-center gap-1 text-green-600 hover:underline"
                     >
                       Baca Selengkapnya

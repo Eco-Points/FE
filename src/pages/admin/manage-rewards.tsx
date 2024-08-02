@@ -25,28 +25,29 @@ export default function ManageRewards() {
     if (searchTerm.trim() === "") {
       setFilteredRewards(rewards);
     } else {
-      setFilteredRewards(rewards.filter((reward) => reward.name.toLowerCase().includes(searchTerm.toLowerCase())));
+      const term = searchTerm.toLowerCase();
+      setFilteredRewards(rewards.filter((reward) => reward.name.toLowerCase().includes(term)));
     }
   }, [searchTerm, rewards]);
 
-  async function fetchRewards() {
+  const fetchRewards = async () => {
     try {
       const response = await getRewards();
       setRewards(response.data || []);
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }
+  };
 
-  async function handleDeleteReward(reward_id: number) {
+  const handleDeleteReward = async (rewardId: number) => {
     try {
-      const response = await deleteReward(reward_id);
+      const response = await deleteReward(rewardId);
       fetchRewards();
       toast.success(response.message);
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }
+  };
 
   return (
     <Layout>
@@ -56,22 +57,18 @@ export default function ManageRewards() {
             Kelola Hadiah
           </h1>
         </div>
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Input
-              type="text"
-              placeholder="Cari hadiah..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-gray-100 border-none focus:ring-0 focus:border-none"
-              data-testid="input-search"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <Button size="sm" className="bg-green-600" asChild data-testid="btn-add-reward">
-              <Link to="/admin/add-reward">Tambah Hadiah</Link>
-            </Button>
-          </div>
+        <div className="mb-6 flex items-center gap-4 justify-between">
+          <Input
+            type="text"
+            placeholder="Cari hadiah..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="bg-gray-100 border-none focus:ring-0 max-w-xs focus:border-none"
+            data-testid="input-search"
+          />
+          <Button size="sm" className="bg-green-600" asChild data-testid="btn-add-reward">
+            <Link to="/admin/add-reward">Tambah Hadiah</Link>
+          </Button>
         </div>
         <div className="overflow-x-auto">
           <Table>
@@ -109,7 +106,7 @@ export default function ManageRewards() {
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleDeleteReward(reward.reward_id)} data-testid={`btn-delete-${reward.reward_id}`}>
                           <TrashIcon className="h-4 w-4 mr-2" />
-                          Delete
+                          Hapus
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
