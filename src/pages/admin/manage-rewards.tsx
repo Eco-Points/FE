@@ -5,11 +5,12 @@ import { toast } from "sonner";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { deleteReward, getRewards } from "@/utils/apis/rewards";
-import { IReward } from "@/utils/types/rewards";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Layout from "@/components/layout";
+
+import { deleteReward, getRewards } from "@/utils/apis/rewards";
+import { IReward } from "@/utils/types/rewards";
 
 export default function ManageRewards() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,9 +55,6 @@ export default function ManageRewards() {
           <h1 className="text-2xl font-bold text-green-700" data-testid="header-title">
             Kelola Hadiah
           </h1>
-          <Button size="sm" className="bg-green-600" asChild data-testid="btn-add-reward">
-            <Link to="/admin/add-reward">Tambah Hadiah</Link>
-          </Button>
         </div>
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -68,6 +66,11 @@ export default function ManageRewards() {
               className="bg-gray-100 border-none focus:ring-0 focus:border-none"
               data-testid="input-search"
             />
+          </div>
+          <div className="flex items-center gap-4">
+            <Button size="sm" className="bg-green-600" asChild data-testid="btn-add-reward">
+              <Link to="/admin/add-reward">Tambah Hadiah</Link>
+            </Button>
           </div>
         </div>
         <div className="overflow-x-auto">

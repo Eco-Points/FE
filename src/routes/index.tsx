@@ -17,6 +17,7 @@ import WasteDepositPage from "@/pages/waste/deposit";
 import WasteHistoryPage from "@/pages/waste/history";
 import AddRewardPage from "@/pages/admin/add-reward";
 import RedeemPointsPage from "@/pages/points/redeem";
+import HistoryRedeemPointsPage from "@/pages/points/history-redeem";
 import DetailWasteDepositPage from "@/pages/admin/detail-waste-deposit";
 import DetailRedeemPoinPage from "@/pages/points/detail-redeem";
 import ContactUs from "@/pages/contactUs/contact-us";
@@ -121,6 +122,11 @@ export default function Router() {
           path: "/points/redeem",
           loader: () => "Redeem Points | Eco-Points",
           element: <RedeemPointsPage />,
+        },
+        {
+          path: "/points/history",
+          loader: () => "Redeem History | Eco-Points",
+          element: <HistoryRedeemPointsPage />,
         },
         {
           path: "/admin/add-location",

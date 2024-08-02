@@ -3,14 +3,13 @@ import { toast } from "sonner";
 
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout";
 
 import { IGetDeposit } from "@/utils/types/admin-waste-deposit";
 import { getDeposit } from "@/utils/apis/admin-waste-deposit";
-import { getExcelDepositUser } from "@/utils/apis/excel";
+import { getExcelRewardtUser } from "@/utils/apis/excel";
 
-export default function WasteHistory() {
+export default function RedeemHistory() {
   const [wasteHistory, setWasteHistory] = useState<IGetDeposit[]>([]);
 
   useEffect(() => {
@@ -28,11 +27,11 @@ export default function WasteHistory() {
 
   const handleDownload = async () => {
     try {
-      const response = await getExcelDepositUser();
+      const response = await getExcelRewardtUser();
       const { tanggal, link } = response.data;
       const a = document.createElement("a");
       a.href = link;
-      a.download = `laporan-penyetoran-sampah-${tanggal}.xlsx`;
+      a.download = `Laporan-penukaran-poin-${tanggal}.xlsx`;
       a.click();
       toast.success("Laporan berhasil diunduh.");
     } catch (error) {
@@ -47,10 +46,10 @@ export default function WasteHistory() {
           <div className="flex items-center justify-between" data-testid="waste-history-header">
             <div className="">
               <h1 className="text-2xl font-bold text-green-700" data-testid="page-title">
-                Riwayat Penyetoran Sampah
+                Riwayat Tukar Poin
               </h1>
             </div>
-            <Button variant={"outline"} onClick={handleDownload} data-testid="btn-submit">
+            <Button variant={"link"} className="text-green-700" onClick={handleDownload} data-testid="btn-submit">
               Download Excel
             </Button>
           </div>
@@ -59,12 +58,10 @@ export default function WasteHistory() {
               <TableHeader className="bg-green-50">
                 <TableRow data-testid="table-header">
                   <TableHead data-testid="table-header-index">#</TableHead>
-                  <TableHead data-testid="table-header-date">Tanggal</TableHead>
+                  <TableHead data-testid="table-header-date">Tanggal Penukaran</TableHead>
                   <TableHead data-testid="table-header-username">Nama Pengguna</TableHead>
-                  <TableHead data-testid="table-header-trash-category">Kategori Sampah</TableHead>
-                  <TableHead data-testid="table-header-quantity">Jumlah</TableHead>
-                  <TableHead data-testid="table-header-verification-status">Status Verifikasi</TableHead>
-                  <TableHead data-testid="table-header-points">Poin</TableHead>
+                  <TableHead data-testid="table-header-trash-category">Hadiah</TableHead>
+                  <TableHead data-testid="table-header-quantity">Jumlah Poin</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -75,17 +72,6 @@ export default function WasteHistory() {
                     <TableCell data-testid={`table-cell-username-${index}`}>{history.fullname}</TableCell>
                     <TableCell data-testid={`table-cell-trash-category-${index}`}>{history.type}</TableCell>
                     <TableCell data-testid={`table-cell-quantity-${index}`}>{history.quantity}</TableCell>
-                    <TableCell data-testid={`table-cell-verification-status-${index}`}>
-                      <Badge
-                        variant={
-                          history.status.toLowerCase() === "pending" ? "secondary" : history.status.toLowerCase() === "verified" ? "default" : "destructive"
-                        }
-                        data-testid={`badge-status-${index}`}
-                      >
-                        {history.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell data-testid={`table-cell-points-${index}`}>{history.point} poin</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
