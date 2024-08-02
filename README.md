@@ -1,16 +1,13 @@
 <div align="center">
-  
+
+# **EcoPoints ~ BE**
 # ![EcoPoints Logo](https://i.imgur.com/CWiIsPB.png)  
-# **EcoPoints**
 
 </div>
 
 <div align="center">
 
-[![Contributors](https://img.shields.io/github/contributors/Eco-Points/FE)](https://github.com/Eco-Points/FE/graphs/contributors)
-[![Forks](https://img.shields.io/github/forks/Eco-Points/FE)](https://github.com/Eco-Points/FE/forks)
-[![Stars](https://img.shields.io/github/stars/Eco-Points/FE)](https://github.com/Eco-Points/FE/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/Eco-Points/FE?color=blue)](https://github.com/Eco-Points/FE/issues)
+Final Project Immersive Backend
 
 </div>
 
