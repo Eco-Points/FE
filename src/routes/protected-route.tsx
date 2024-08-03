@@ -21,12 +21,13 @@ const ProtectedRoute = () => {
     "/waste/history",
     "/admin/add-reward",
     "/points/redeem",
+    "/points/history",
     "/admin/add-location",
     "/points/detail-redeem/:reward_id",
     "/admin/deposit/:deposit_id",
   ];
 
-  const userProtected = ["/dashboard", "/waste/deposit", "/waste/history", "/points/redeem", "/points/detail-redeem/:reward_id"];
+  const userProtected = ["/dashboard", "/waste/deposit", "/waste/history", "/points/redeem", "/points/history", "/points/detail-redeem/:reward_id"];
 
   const adminProtected = [
     "/admin/reports",
@@ -39,6 +40,7 @@ const ProtectedRoute = () => {
     "/admin/add-reward",
     "/admin/add-location",
     "/admin/deposit/:deposit_id",
+    "/admin/history-redeem",
   ];
 
   const protectedSuspend = [
@@ -64,6 +66,8 @@ const ProtectedRoute = () => {
     "/admin/add-reward",
     "/points/redeem",
     "/admin/add-location",
+    "/admin/history-redeem",
+    "/points/history",
     "/points/detail-redeem/:reward_id",
     "/admin/deposit/:deposit_id",
   ];
