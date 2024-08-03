@@ -1,26 +1,24 @@
-import axios from "axios";
+import { iReportDeposit, iReportReward, iResponeReportDeposit, iResponeReportReward } from "../types/report";
 import axiosWithConfig from "./axios-with-config";
 
-export const fetchDepositReport = async (params: { trash_id: number; location_id: number; start_date: string; end_date: string }) => {
-  const { trash_id, location_id, start_date, end_date } = params;
+export const fetchDeposit = async (params: iReportDeposit): Promise<iResponeReportDeposit> => {
   try {
-    const response = await axiosWithConfig.get(`/dashboard/depositstat`, {
-      params: { trash_id, location_id, start_date, end_date },
-    });
+    const response = await axiosWithConfig.get("/dashboard/depositstat", { params });
+    console.log("Deposit response line chart:", response.data); // Debugging
     return response.data;
-  } catch (error: any) {
-    console.error("Error fetching deposit report:", error);
-    if (axios.isAxiosError(error)) {
-      console.error("Error details:", error.response?.data);
-    }
+  } catch (error) {
+    console.error("Error fetching deposit:", error);
     throw error;
   }
 };
 
-export const fetchRewardReport = async (params: { start_date: string; end_date: string }) => {
-  const { start_date, end_date } = params;
-  const response = await axiosWithConfig.get(`/dashboard/rewardstat`, {
-    params: { start_date, end_date },
-  });
-  return response.data;
+export const fetchReward = async (params: iReportReward): Promise<iResponeReportReward> => {
+  try {
+    const response = await axiosWithConfig.get("/dashboard/rewardstat", { params });
+    console.log("Reward response line chart:", response.data); // Debugging
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching reward:", error);
+    throw error;
+  }
 };
