@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
 import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Layout from "@/components/layout";
 import LineChartComponent from "@/components/component/line-chart";
+import PieChart from "@/components/component/pie-chart";
+
 import { ChartProvider } from "@/utils/contexts/chartContext";
 import { getlocation } from "@/utils/apis/waste-location";
-import { IGetLocation } from "@/utils/types/waste-location";
 import { fetchDeposit, fetchReward } from "@/utils/apis/report";
+import { IGetLocation } from "@/utils/types/waste-location";
 import { iReportDeposit, iResponeReportDeposit, DepositStatistic, iResponeReportReward, iReportReward, RewardStatistic } from "@/utils/types/report";
-import PieChart from "@/components/component/pie-chart";
 
 const formatDate = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
@@ -25,29 +27,27 @@ const Component: React.FC = () => {
   const [loadingDeposit, setLoadingDeposit] = useState(true);
   const [locations, setLocations] = useState<IGetLocation[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
-  const [endDate, setEndDate] = useState<Date>(new Date()); // Initialize endDate to the current date
-  const [startDatePie, setStartDatePie] = useState<Date | undefined>(undefined); // State for PieChart start date
-  const [endDatePie, setEndDatePie] = useState<Date>(new Date()); // State for PieChart end date
-  const [selectedTrashType, setSelectedTrashType] = useState<string | undefined>(undefined); // Default to undefined
-  const [selectedLocation, setSelectedLocation] = useState<number | undefined>(undefined); // Default to undefined
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startDatePie, setStartDatePie] = useState<Date | undefined>(undefined);
+  const [endDatePie, setEndDatePie] = useState<Date>(new Date());
+  const [selectedTrashType, setSelectedTrashType] = useState<string | undefined>(undefined);
+  const [selectedLocation, setSelectedLocation] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch locations
         const locationsResponse = await getlocation();
         setLocations(locationsResponse);
 
-        // Convert parameters to strings
         const depositParams: iReportDeposit = {
-          trash_id: selectedTrashType ?? undefined, // Use undefined for all types if undefined
-          location_id: selectedLocation !== undefined ? selectedLocation.toString() : undefined, // Use undefined for all locations if undefined
+          trash_id: selectedTrashType ?? undefined,
+          location_id: selectedLocation !== undefined ? selectedLocation.toString() : undefined,
           start_date: startDate ? formatDate(startDate) : "01-07-2024",
-          end_date: endDate ? formatDate(endDate) : formatDate(new Date()), // Use current date as default
+          end_date: endDate ? formatDate(endDate) : formatDate(new Date()),
         };
 
         const depositResponse: iResponeReportDeposit = await fetchDeposit(depositParams);
-        setDepositData(depositResponse.data || []); // Default to empty array if null
+        setDepositData(depositResponse.data || []);
 
         const rewardParams: iReportReward = {
           start_date: startDatePie ? formatDate(startDatePie) : "01-07-2024",
@@ -55,7 +55,7 @@ const Component: React.FC = () => {
         };
 
         const rewardResponse: iResponeReportReward = await fetchReward(rewardParams);
-        setRewardData(rewardResponse.data || []); // Default to empty array if null
+        setRewardData(rewardResponse.data || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {

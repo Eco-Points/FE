@@ -6,25 +6,22 @@ import chroma from "chroma-js";
 import { RewardStatistic } from "@/utils/types/report";
 
 interface PieChartComponentProps {
-  data: RewardStatistic[] | null; // Allow data to be null
+  data: RewardStatistic[] | null;
 }
 
 const PieChart: React.FC<PieChartComponentProps> = ({ data }) => {
-  // Handle case where data is null or empty
-  const validData = data ?? []; // Default to an empty array if data is null
+  const validData = data ?? [];
 
   if (validData.length === 0) {
     return <div className="text-center text-gray-500">No data available</div>;
   }
 
-  // Generate a color palette based on the number of data items
   const colorPalette = chroma.scale("Set2").mode("lab").colors(validData.length);
 
-  // Prepare chart data with colors
   const chartData = validData.map((item, index) => ({
     name: item.reward_name,
     value: item.total,
-    fill: colorPalette[index] || chroma.random().hex(), // Use generated color or fallback to a random color
+    fill: colorPalette[index] || chroma.random().hex(),
   }));
 
   const chartConfig = {

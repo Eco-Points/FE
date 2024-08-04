@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import WasteLocation from "../../components/map";
+import WasteLocation from "@/components/map";
 
 const location = () => {
   return (

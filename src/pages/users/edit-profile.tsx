@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import Layout from "../../components/layout";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
-import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
-import { Input } from "../../components/ui/input";
-import { EditProfileSchema, editProfileSchema } from "@/utils/types/users";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
+import { toast } from "sonner";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { CustomFormField } from "@/components/custom-formfield";
+import Layout from "@/components/layout";
+
 import { useToken } from "@/utils/contexts/token";
 import { editProfile } from "@/utils/apis/users";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { CustomFormField } from "@/components/custom-formfield";
+import { EditProfileSchema, editProfileSchema } from "@/utils/types/users";
 
 const EditProfile = () => {
   const { user } = useToken();
@@ -89,13 +92,7 @@ const EditProfile = () => {
                     {(field) => <Textarea {...field} placeholder="Masukkan alamat" />}
                   </CustomFormField>
                 </div>
-                <CustomFormField
-                  control={methods.control}
-                  name="image_url"
-                  label="Profile Picture"
-                  description="Upload your profile picture"
-                  data-testid="profile-picture-field"
-                >
+                <CustomFormField control={methods.control} name="image_url" label="Profile Picture" description="Upload your profile picture" data-testid="profile-picture-field">
                   {(field) => (
                     <div className="flex items-center gap-4">
                       <Avatar className="h-16 w-16" data-testid="profile-avatar">

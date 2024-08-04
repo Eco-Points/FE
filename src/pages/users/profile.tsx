@@ -1,6 +1,6 @@
 import { useToken } from "@/utils/contexts/token";
-import Layout from "../../components/layout";
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import Layout from "@/components/layout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -17,10 +17,7 @@ const Profile = () => {
           <div className="flex items-center justify-between" data-testid="profile-header">
             <div className="flex items-center gap-4">
               <Avatar className="w-12 h-12" data-testid="profile-avatar">
-                <AvatarImage
-                  src={user.image_url || "https://images.unsplash.com/photo-1599566150163-29194dcaad36"}
-                  className="rounded-full w-full h-full object-cover"
-                />
+                <AvatarImage src={user.image_url || "https://images.unsplash.com/photo-1599566150163-29194dcaad36"} className="rounded-full w-full h-full object-cover" />
                 <AvatarFallback>{user.fullname[0]}</AvatarFallback>
               </Avatar>
               <div className="space-y-1" data-testid="profile-info">

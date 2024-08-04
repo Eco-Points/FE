@@ -5,7 +5,7 @@ export const addLocation = async (data: LocationFormData) => {
   try {
     const response = await axiosWithConfig.post("/location", data, {
       headers: {
-        "Content-Type": "application/json", // Set header Content-Type ke application/json
+        "Content-Type": "application/json",
       },
     });
     return response.data;

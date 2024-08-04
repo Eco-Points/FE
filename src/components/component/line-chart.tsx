@@ -5,7 +5,7 @@ import { LineChart, CartesianGrid, XAxis, Line, Tooltip, Dot } from "recharts";
 import { DepositStatistic } from "@/utils/types/report";
 
 interface LineChartComponentProps {
-  data: DepositStatistic[] | null; // Allow data to be null
+  data: DepositStatistic[] | null;
 }
 
 const formatDate = (date: string): string => {
@@ -14,7 +14,6 @@ const formatDate = (date: string): string => {
 };
 
 const LineChartComponent: React.FC<LineChartComponentProps> = ({ data = [] }) => {
-  // Guard clause to handle cases where data might be null
   if (!data || data.length === 0) {
     return (
       <Card>
@@ -65,13 +64,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({ data = [] }) =>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 5)} />
             <Tooltip cursor={false} content={<CustomTooltip />} />
-            <Line
-              dataKey="total"
-              type="natural"
-              stroke="var(--color-total)"
-              strokeWidth={2}
-              dot={<CustomDot />} // Use CustomDot for custom rendering
-            />
+            <Line dataKey="total" type="natural" stroke="var(--color-total)" strokeWidth={2} dot={<CustomDot />} />
           </LineChart>
         </ChartContainer>
       </CardContent>
@@ -86,7 +79,6 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({ data = [] }) =>
   );
 };
 
-// Custom Dot Component
 const CustomDot: React.FC<any> = (props) => {
   const { cx, cy, stroke, payload } = props;
   return (
@@ -98,7 +90,6 @@ const CustomDot: React.FC<any> = (props) => {
   );
 };
 
-// Custom Tooltip Component
 const CustomTooltip: React.FC<any> = ({ payload, label }) => {
   if (payload && payload.length > 0) {
     const { total } = payload[0].payload;

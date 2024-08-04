@@ -1,17 +1,17 @@
+import { DayPickerProvider, DayPickerProps } from "react-day-picker";
+
+import Layout from "@/components/layout";
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { DayPickerProvider, DayPickerProps } from "react-day-picker"; // Import DayPickerProvider and Calendar
-import Layout from "../../components/layout";
 import { Calendar } from "@/components/ui/calendar";
 
 const initialDayPickerProps: DayPickerProps = {
-  // Add the necessary props for the DayPicker component here
-  mode: "range", // Example prop
-  // Add other props as needed
+  mode: "range",
 };
 
 export default function Component() {
@@ -20,9 +20,7 @@ export default function Component() {
       <Card className="w-full max-w-md mx-auto my-11" data-testid="contact-form-card">
         <CardHeader>
           <CardTitle data-testid="card-title">Get in Touch</CardTitle>
-          <CardDescription data-testid="card-description">
-            Join our mission to build a more sustainable future. Share your thoughts and connect with our team.
-          </CardDescription>
+          <CardDescription data-testid="card-description">Join our mission to build a more sustainable future. Share your thoughts and connect with our team.</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="grid gap-4" data-testid="contact-form">
