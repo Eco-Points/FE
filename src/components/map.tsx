@@ -23,6 +23,7 @@ const WasteLocation: React.FC = () => {
   const [nearestLocations, setNearestLocations] = useState<IGetLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mapInitialized, setMapInitialized] = useState(false);
 
   useEffect(() => {
     const fetchLocationData = async () => {
@@ -71,6 +72,7 @@ const WasteLocation: React.FC = () => {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
+        setMapInitialized(true);
       },
       (error) => {
         console.error("Error getting user location:", error);
@@ -79,12 +81,7 @@ const WasteLocation: React.FC = () => {
   };
 
   const handleViewMyLocation = () => {
-    if (userLocation) {
-      const map = (window as any).map;
-      if (map) {
-        map.setView([userLocation.latitude, userLocation.longitude], 13);
-      }
-    }
+    setMapInitialized(true);
   };
 
   const handleNavigate = (location: IGetLocation) => {
@@ -116,10 +113,11 @@ const WasteLocation: React.FC = () => {
   const MapWithCenter = () => {
     const map = useMap();
     useEffect(() => {
-      if (userLocation) {
+      if (userLocation && mapInitialized) {
         map.setView([userLocation.latitude, userLocation.longitude], 13);
+        setMapInitialized(false);
       }
-    }, [userLocation, map]);
+    }, [userLocation, mapInitialized, map]);
     return null;
   };
 
