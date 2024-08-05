@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/layout";
 
 import { ProfileType } from "@/utils/types/users";
+import { formatNumber } from "@/utils/function";
 import { getProfile } from "@/utils/apis/users";
 
 export default function DashboardUser() {
@@ -37,7 +38,7 @@ export default function DashboardUser() {
               Selamat datang, {user?.fullname || "Pengguna"}
             </h2>
             <p className="text-gray-700" data-testid="points-balance">
-              Saldo Poin: <span className="font-bold">{user?.point || 0}</span>
+              Saldo Poin: <span className="font-bold">{formatNumber(user?.point ?? 0)}</span>
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8" data-testid="dashboard-links">

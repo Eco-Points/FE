@@ -33,3 +33,7 @@ export const formatDate = (dateString: string) => {
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
+
+export const formatNumber = (points: number) => {
+  return points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
